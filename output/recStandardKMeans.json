@@ -1,0 +1,3391 @@
+[
+  [
+    {
+      "from": "Bari",
+      "to": "Pesaro",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 8,
+        "Rice": 11,
+        "Sandals": 23
+      }
+    },
+    {
+      "from": "Pesaro",
+      "to": "Afragola",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Fertilizer": 1,
+        "Garbage Bags": 22,
+        "Peanuts": 8,
+        "Sandals": 1,
+        "Treadmill": 11,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Genoa",
+      "merchandise": {
+        "Exercise Ball": 10,
+        "Fertilizer": 8,
+        "Garbage Bags": 13,
+        "Peanuts": 1,
+        "Rice": 15,
+        "Sandals": 12,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Potenza",
+      "merchandise": {
+        "Exercise Ball": 5,
+        "Fertilizer": 28,
+        "Garbage Bags": 30,
+        "Rice": 10,
+        "Sandals": 22
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Palermo",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Sunscreen": 16
+      }
+    },
+    {
+      "from": "Palermo",
+      "to": "Vigevano",
+      "merchandise": {
+        "Exercise Ball": 9,
+        "Peanuts": 14
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "La Spezia",
+      "merchandise": {
+        "Fertilizer": 29,
+        "Rice": 5,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Busto Arsizio",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Garbage Bags": 8,
+        "Peanuts": 3,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "Busto Arsizio",
+      "to": "Carpi",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 15,
+        "Fertilizer": 15,
+        "Rice": 11,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Carpi",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Exercise Ball": 13,
+        "Peanuts": 4,
+        "Rice": 7,
+        "Sandals": 14,
+        "Vacuum Cleaner": 1
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Ragusa",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Exercise Ball": 4,
+        "Fertilizer": 8,
+        "Garbage Bags": 29,
+        "Rice": 24,
+        "Sandals": 24,
+        "Sunscreen": 11,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Como",
+      "merchandise": {
+        "Garbage Bags": 18
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Cosenza",
+      "merchandise": {
+        "Rice": 18
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Peanuts": 4,
+        "Sunscreen": 15,
+        "Treadmill": 6,
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Milan",
+      "merchandise": {
+        "Garbage Bags": 2
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Exercise Ball": 11,
+        "Fertilizer": 3,
+        "Garbage Bags": 24,
+        "Peanuts": 6,
+        "Rice": 14,
+        "Sandals": 27,
+        "Sunscreen": 29,
+        "Treadmill": 14,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Aversa",
+      "merchandise": {
+        "Exercise Ball": 30,
+        "Fertilizer": 19,
+        "Garbage Bags": 20,
+        "Rice": 13,
+        "Sunscreen": 8,
+        "Vacuum Cleaner": 27
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Exercise Ball": 8,
+        "Garbage Bags": 26,
+        "Rice": 24,
+        "Sandals": 3,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Tivoli",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Exercise Ball": 16,
+        "Fertilizer": 12,
+        "Garbage Bags": 17,
+        "Rice": 3,
+        "Sandals": 30,
+        "Sunscreen": 24,
+        "Treadmill": 29,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Piacenza",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Garbage Bags": 14,
+        "Peanuts": 21,
+        "Sandals": 16,
+        "Sunscreen": 20
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Brescia",
+      "merchandise": {
+        "Beach Chair": 22,
+        "Exercise Ball": 27,
+        "Fertilizer": 16,
+        "Garbage Bags": 14,
+        "Peanuts": 23,
+        "Sandals": 20,
+        "Sunscreen": 8,
+        "Treadmill": 25,
+        "Vacuum Cleaner": 24
+      }
+    },
+    {
+      "from": "Brescia",
+      "to": "Cesena",
+      "merchandise": {
+        "Fertilizer": 13,
+        "Peanuts": 15,
+        "Rice": 23,
+        "Sandals": 25,
+        "Sunscreen": 25,
+        "Treadmill": 13,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Exercise Ball": 11,
+        "Fertilizer": 10,
+        "Garbage Bags": 17,
+        "Peanuts": 2,
+        "Sandals": 6,
+        "Sunscreen": 23,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Parma",
+      "merchandise": {
+        "Beach Chair": 2,
+        "Exercise Ball": 28,
+        "Garbage Bags": 16,
+        "Rice": 19,
+        "Sandals": 15,
+        "Sunscreen": 4,
+        "Vacuum Cleaner": 24
+      }
+    }
+  ],
+  [
+    {
+      "from": "Vittoria",
+      "to": "Cesena",
+      "merchandise": {
+        "Fertilizer": 26,
+        "Garbage Bags": 28,
+        "Rice": 29,
+        "Vacuum Cleaner": 10
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Alessandria",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Peanuts": 22,
+        "Rice": 1,
+        "Treadmill": 9
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Ragusa",
+      "merchandise": {
+        "Exercise Ball": 2,
+        "Vacuum Cleaner": 22
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Exercise Ball": 10,
+        "Fertilizer": 26,
+        "Garbage Bags": 30,
+        "Peanuts": 30,
+        "Rice": 4,
+        "Sandals": 30,
+        "Sunscreen": 10,
+        "Treadmill": 14,
+        "Vacuum Cleaner": 30
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Naples",
+      "merchandise": {
+        "Fertilizer": 26,
+        "Rice": 3
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Afragola",
+      "merchandise": {
+        "Peanuts": 15,
+        "Rice": 27,
+        "Sandals": 17,
+        "Sunscreen": 22,
+        "Treadmill": 19,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Cerignola",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Fertilizer": 30
+      }
+    },
+    {
+      "from": "Cerignola",
+      "to": "Foggia",
+      "merchandise": {
+        "Fertilizer": 17,
+        "Rice": 4,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Rice": 13
+      }
+    },
+    {
+      "from": "Caltanissetta",
+      "to": "Pesaro",
+      "merchandise": {
+        "Beach Chair": 24,
+        "Exercise Ball": 6,
+        "Garbage Bags": 13,
+        "Sandals": 7,
+        "Sunscreen": 26
+      }
+    },
+    {
+      "from": "Pesaro",
+      "to": "Olbia",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Peanuts": 24,
+        "Rice": 6,
+        "Sandals": 12,
+        "Sunscreen": 13,
+        "Treadmill": 29,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Olbia",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Peanuts": 29,
+        "Rice": 11,
+        "Sandals": 7,
+        "Sunscreen": 30,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Beach Chair": 30,
+        "Exercise Ball": 27,
+        "Fertilizer": 18,
+        "Garbage Bags": 4,
+        "Peanuts": 8,
+        "Rice": 27,
+        "Sandals": 12,
+        "Sunscreen": 6,
+        "Treadmill": 3,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Bari",
+      "merchandise": {
+        "Beach Chair": 25,
+        "Fertilizer": 16,
+        "Garbage Bags": 8,
+        "Peanuts": 14,
+        "Sandals": 7,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Bari",
+      "to": "Palermo",
+      "merchandise": {
+        "Exercise Ball": 12,
+        "Fertilizer": 19,
+        "Garbage Bags": 19,
+        "Sunscreen": 16,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Palermo",
+      "to": "Andria",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Sandals": 18
+      }
+    },
+    {
+      "from": "Andria",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Exercise Ball": 28,
+        "Fertilizer": 4,
+        "Garbage Bags": 19,
+        "Peanuts": 20,
+        "Rice": 29,
+        "Sandals": 30,
+        "Sunscreen": 6,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Busto Arsizio",
+      "merchandise": {
+        "Fertilizer": 8,
+        "Sandals": 13,
+        "Sunscreen": 17,
+        "Treadmill": 7
+      }
+    },
+    {
+      "from": "Busto Arsizio",
+      "to": "Asti",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Fertilizer": 15,
+        "Garbage Bags": 23,
+        "Peanuts": 6,
+        "Treadmill": 27
+      }
+    },
+    {
+      "from": "Asti",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Exercise Ball": 7,
+        "Fertilizer": 18,
+        "Garbage Bags": 16,
+        "Peanuts": 2,
+        "Rice": 18,
+        "Sandals": 17,
+        "Treadmill": 25,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Catania",
+      "merchandise": {
+        "Fertilizer": 29
+      }
+    },
+    {
+      "from": "Catania",
+      "to": "Cosenza",
+      "merchandise": {
+        "Garbage Bags": 22,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Altamura",
+      "merchandise": {
+        "Garbage Bags": 21,
+        "Rice": 9,
+        "Treadmill": 4
+      }
+    },
+    {
+      "from": "Altamura",
+      "to": "Trieste",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Exercise Ball": 8,
+        "Fertilizer": 23,
+        "Garbage Bags": 2,
+        "Rice": 19,
+        "Sunscreen": 18,
+        "Treadmill": 7
+      }
+    },
+    {
+      "from": "Trieste",
+      "to": "Agrigento",
+      "merchandise": {
+        "Rice": 25
+      }
+    },
+    {
+      "from": "Agrigento",
+      "to": "Arezzo",
+      "merchandise": {
+        "Fertilizer": 25,
+        "Treadmill": 16,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Molfetta",
+      "merchandise": {
+        "Exercise Ball": 11,
+        "Fertilizer": 14,
+        "Garbage Bags": 3,
+        "Peanuts": 13,
+        "Rice": 30,
+        "Sandals": 24,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "La Spezia",
+      "merchandise": {
+        "Beach Chair": 24,
+        "Fertilizer": 4,
+        "Peanuts": 22,
+        "Treadmill": 21
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Exercise Ball": 14,
+        "Garbage Bags": 19,
+        "Peanuts": 10,
+        "Rice": 8,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Milan",
+      "merchandise": {
+        "Beach Chair": 15,
+        "Exercise Ball": 6,
+        "Fertilizer": 17,
+        "Garbage Bags": 27,
+        "Peanuts": 19,
+        "Rice": 25,
+        "Sandals": 26,
+        "Sunscreen": 30,
+        "Treadmill": 14,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Carpi",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Exercise Ball": 22,
+        "Garbage Bags": 13,
+        "Peanuts": 23,
+        "Rice": 2,
+        "Sandals": 25,
+        "Sunscreen": 18,
+        "Treadmill": 16,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Carpi",
+      "to": "Vigevano",
+      "merchandise": {
+        "Exercise Ball": 21,
+        "Fertilizer": 22,
+        "Garbage Bags": 1,
+        "Peanuts": 29,
+        "Rice": 30,
+        "Sandals": 26,
+        "Sunscreen": 7,
+        "Vacuum Cleaner": 8
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Prato",
+      "merchandise": {
+        "Exercise Ball": 29,
+        "Fertilizer": 5,
+        "Garbage Bags": 20
+      }
+    },
+    {
+      "from": "Prato",
+      "to": "Grosseto",
+      "merchandise": {
+        "Exercise Ball": 30,
+        "Rice": 5,
+        "Sandals": 5,
+        "Sunscreen": 15,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Grosseto",
+      "to": "Genoa",
+      "merchandise": {
+        "Fertilizer": 9
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Potenza",
+      "merchandise": {
+        "Exercise Ball": 20,
+        "Fertilizer": 9,
+        "Rice": 26,
+        "Sunscreen": 23,
+        "Vacuum Cleaner": 29
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Como",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 12,
+        "Fertilizer": 21,
+        "Garbage Bags": 9,
+        "Peanuts": 20,
+        "Rice": 23,
+        "Sandals": 9,
+        "Sunscreen": 27,
+        "Treadmill": 29,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Aversa",
+      "merchandise": {
+        "Beach Chair": 28,
+        "Exercise Ball": 14,
+        "Fertilizer": 30,
+        "Garbage Bags": 27,
+        "Peanuts": 13,
+        "Rice": 30,
+        "Sandals": 25,
+        "Sunscreen": 20,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Tivoli",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Fertilizer": 28,
+        "Garbage Bags": 16,
+        "Peanuts": 3,
+        "Treadmill": 8
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Exercise Ball": 4,
+        "Fertilizer": 30,
+        "Peanuts": 14,
+        "Rice": 14,
+        "Sandals": 21,
+        "Sunscreen": 28,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 16
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Brescia",
+      "merchandise": {
+        "Beach Chair": 19,
+        "Exercise Ball": 24,
+        "Fertilizer": 24,
+        "Garbage Bags": 21,
+        "Peanuts": 29,
+        "Rice": 1,
+        "Treadmill": 3,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Brescia",
+      "to": "Pistoia",
+      "merchandise": {
+        "Garbage Bags": 21,
+        "Rice": 4,
+        "Sandals": 29,
+        "Sunscreen": 5
+      }
+    },
+    {
+      "from": "Pistoia",
+      "to": "Piacenza",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Garbage Bags": 19,
+        "Sandals": 8,
+        "Sunscreen": 6,
+        "Treadmill": 21
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Exercise Ball": 19,
+        "Fertilizer": 25,
+        "Peanuts": 10,
+        "Sandals": 3,
+        "Vacuum Cleaner": 3
+      }
+    }
+  ],
+  [
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Foggia",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Exercise Ball": 21,
+        "Sunscreen": 27
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Potenza",
+      "merchandise": {
+        "Beach Chair": 25,
+        "Treadmill": 2
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Cosenza",
+      "merchandise": {
+        "Exercise Ball": 3
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Andria",
+      "merchandise": {
+        "Peanuts": 28,
+        "Rice": 12,
+        "Treadmill": 1
+      }
+    },
+    {
+      "from": "Andria",
+      "to": "Piacenza",
+      "merchandise": {
+        "Exercise Ball": 25,
+        "Garbage Bags": 7,
+        "Sandals": 29,
+        "Sunscreen": 8,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 18
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Fertilizer": 13,
+        "Garbage Bags": 30,
+        "Rice": 24,
+        "Sandals": 30,
+        "Treadmill": 9,
+        "Vacuum Cleaner": 14
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Parma",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Fertilizer": 27,
+        "Rice": 26,
+        "Sandals": 22,
+        "Sunscreen": 18,
+        "Treadmill": 20,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Molfetta",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 4,
+        "Fertilizer": 7,
+        "Rice": 28,
+        "Sandals": 29,
+        "Sunscreen": 24,
+        "Treadmill": 22,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Grosseto",
+      "merchandise": {
+        "Beach Chair": 14,
+        "Fertilizer": 21,
+        "Garbage Bags": 1,
+        "Peanuts": 10,
+        "Rice": 28,
+        "Sunscreen": 2,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 18
+      }
+    },
+    {
+      "from": "Grosseto",
+      "to": "Como",
+      "merchandise": {
+        "Fertilizer": 28
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Fertilizer": 19,
+        "Peanuts": 1,
+        "Vacuum Cleaner": 20
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Tivoli",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Fertilizer": 14,
+        "Garbage Bags": 22,
+        "Peanuts": 2,
+        "Sunscreen": 9,
+        "Treadmill": 11,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Pesaro",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Exercise Ball": 7,
+        "Fertilizer": 17,
+        "Garbage Bags": 12,
+        "Peanuts": 6,
+        "Rice": 9,
+        "Sandals": 8,
+        "Sunscreen": 25,
+        "Vacuum Cleaner": 28
+      }
+    }
+  ],
+  [
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Rimini",
+      "merchandise": {
+        "Beach Chair": 23,
+        "Fertilizer": 8,
+        "Peanuts": 12,
+        "Sunscreen": 12
+      }
+    },
+    {
+      "from": "Rimini",
+      "to": "Naples",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Fertilizer": 3,
+        "Garbage Bags": 28,
+        "Peanuts": 28,
+        "Rice": 10,
+        "Sandals": 29,
+        "Sunscreen": 10,
+        "Treadmill": 29,
+        "Vacuum Cleaner": 10
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Sunscreen": 4,
+        "Vacuum Cleaner": 28
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Ragusa",
+      "merchandise": {
+        "Rice": 10,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Altamura",
+      "merchandise": {
+        "Fertilizer": 2,
+        "Garbage Bags": 8,
+        "Sandals": 18
+      }
+    },
+    {
+      "from": "Altamura",
+      "to": "Afragola",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Exercise Ball": 6,
+        "Fertilizer": 12,
+        "Rice": 17,
+        "Sunscreen": 7
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Aversa",
+      "merchandise": {
+        "Peanuts": 19
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Garbage Bags": 23,
+        "Treadmill": 9,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Como",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Fertilizer": 29,
+        "Rice": 16
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Beach Chair": 28,
+        "Exercise Ball": 6,
+        "Garbage Bags": 27,
+        "Peanuts": 7,
+        "Rice": 16
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Andria",
+      "merchandise": {
+        "Treadmill": 25,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Andria",
+      "to": "Cerignola",
+      "merchandise": {
+        "Sunscreen": 29,
+        "Treadmill": 10,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Cerignola",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Garbage Bags": 6
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Forlì",
+      "merchandise": {
+        "Exercise Ball": 24,
+        "Garbage Bags": 5,
+        "Vacuum Cleaner": 10
+      }
+    },
+    {
+      "from": "Forlì",
+      "to": "Potenza",
+      "merchandise": {
+        "Garbage Bags": 15,
+        "Sandals": 28,
+        "Sunscreen": 23,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Milan",
+      "merchandise": {
+        "Beach Chair": 18,
+        "Fertilizer": 18,
+        "Garbage Bags": 7,
+        "Peanuts": 13,
+        "Sandals": 13,
+        "Sunscreen": 22,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Piacenza",
+      "merchandise": {
+        "Rice": 1
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Molfetta",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Peanuts": 17,
+        "Sandals": 16,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Bari",
+      "merchandise": {
+        "Garbage Bags": 26
+      }
+    },
+    {
+      "from": "Bari",
+      "to": "Busto Arsizio",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Fertilizer": 9,
+        "Garbage Bags": 14,
+        "Sandals": 22,
+        "Sunscreen": 18
+      }
+    },
+    {
+      "from": "Busto Arsizio",
+      "to": "La Spezia",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 15,
+        "Fertilizer": 16,
+        "Garbage Bags": 9,
+        "Sandals": 19
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Vigevano",
+      "merchandise": {
+        "Garbage Bags": 20,
+        "Sunscreen": 5
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Treviso",
+      "merchandise": {
+        "Garbage Bags": 30,
+        "Peanuts": 22,
+        "Sandals": 18,
+        "Treadmill": 19,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Treviso",
+      "to": "Parma",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Peanuts": 2,
+        "Rice": 9,
+        "Sandals": 19,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Exercise Ball": 6,
+        "Fertilizer": 1,
+        "Garbage Bags": 12,
+        "Peanuts": 7,
+        "Rice": 29,
+        "Sandals": 15,
+        "Treadmill": 17
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Beach Chair": 22,
+        "Exercise Ball": 16,
+        "Garbage Bags": 22,
+        "Peanuts": 26,
+        "Vacuum Cleaner": 17
+      }
+    }
+  ],
+  [
+    {
+      "from": "Carpi",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Fertilizer": 10,
+        "Rice": 11,
+        "Sunscreen": 8,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Fertilizer": 30,
+        "Garbage Bags": 9,
+        "Peanuts": 16,
+        "Sandals": 20,
+        "Sunscreen": 27,
+        "Vacuum Cleaner": 29
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Vittoria",
+      "merchandise": {
+        "Garbage Bags": 19,
+        "Rice": 30,
+        "Sunscreen": 25,
+        "Treadmill": 13,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Afragola",
+      "merchandise": {
+        "Exercise Ball": 1,
+        "Sandals": 8
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Catania",
+      "merchandise": {
+        "Fertilizer": 14,
+        "Rice": 13,
+        "Sandals": 29,
+        "Treadmill": 28
+      }
+    },
+    {
+      "from": "Catania",
+      "to": "Aversa",
+      "merchandise": {
+        "Exercise Ball": 12,
+        "Fertilizer": 26,
+        "Garbage Bags": 20,
+        "Peanuts": 6,
+        "Rice": 6,
+        "Sandals": 28,
+        "Sunscreen": 8,
+        "Treadmill": 28,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Trieste",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Garbage Bags": 5,
+        "Peanuts": 18,
+        "Rice": 18,
+        "Sunscreen": 14
+      }
+    },
+    {
+      "from": "Trieste",
+      "to": "Molfetta",
+      "merchandise": {
+        "Fertilizer": 15,
+        "Garbage Bags": 29,
+        "Peanuts": 15,
+        "Rice": 4,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Como",
+      "merchandise": {
+        "Exercise Ball": 4,
+        "Garbage Bags": 1,
+        "Rice": 19,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Parma",
+      "merchandise": {
+        "Beach Chair": 15,
+        "Garbage Bags": 11,
+        "Peanuts": 29,
+        "Sandals": 1,
+        "Treadmill": 27,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Arezzo",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Exercise Ball": 9,
+        "Fertilizer": 2,
+        "Garbage Bags": 18,
+        "Peanuts": 12,
+        "Rice": 6,
+        "Sandals": 2,
+        "Sunscreen": 16,
+        "Treadmill": 24,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Beach Chair": 28,
+        "Exercise Ball": 29,
+        "Fertilizer": 21,
+        "Garbage Bags": 9,
+        "Peanuts": 7,
+        "Rice": 27,
+        "Sandals": 19,
+        "Sunscreen": 1,
+        "Treadmill": 17,
+        "Vacuum Cleaner": 9
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Piacenza",
+      "merchandise": {
+        "Garbage Bags": 2,
+        "Sandals": 1,
+        "Vacuum Cleaner": 25
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Garbage Bags": 26,
+        "Rice": 2,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Cesena",
+      "merchandise": {
+        "Beach Chair": 15,
+        "Exercise Ball": 24,
+        "Fertilizer": 28,
+        "Peanuts": 24,
+        "Rice": 4,
+        "Sandals": 20,
+        "Sunscreen": 6,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 10
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 14,
+        "Peanuts": 18,
+        "Rice": 15,
+        "Sandals": 27,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Potenza",
+      "merchandise": {
+        "Vacuum Cleaner": 8
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Palermo",
+      "merchandise": {
+        "Exercise Ball": 18,
+        "Rice": 29,
+        "Sunscreen": 13
+      }
+    },
+    {
+      "from": "Palermo",
+      "to": "Alessandria",
+      "merchandise": {
+        "Beach Chair": 4,
+        "Exercise Ball": 12,
+        "Fertilizer": 15,
+        "Garbage Bags": 19,
+        "Peanuts": 16,
+        "Rice": 23,
+        "Sandals": 28,
+        "Sunscreen": 2,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 29
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Fertilizer": 2,
+        "Rice": 3,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 28,
+        "Sunscreen": 8
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Beach Chair": 25,
+        "Exercise Ball": 4,
+        "Fertilizer": 12,
+        "Peanuts": 13,
+        "Rice": 26,
+        "Sandals": 24,
+        "Sunscreen": 18,
+        "Treadmill": 17
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Ragusa",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Exercise Ball": 8,
+        "Fertilizer": 4,
+        "Garbage Bags": 1,
+        "Peanuts": 27,
+        "Sandals": 29,
+        "Treadmill": 10,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Cosenza",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Exercise Ball": 21,
+        "Peanuts": 11,
+        "Rice": 16,
+        "Sandals": 27,
+        "Sunscreen": 7,
+        "Treadmill": 29
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Grosseto",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Sandals": 15,
+        "Sunscreen": 30,
+        "Treadmill": 27,
+        "Vacuum Cleaner": 20
+      }
+    }
+  ],
+  [
+    {
+      "from": "Carpi",
+      "to": "Pistoia",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Exercise Ball": 10,
+        "Fertilizer": 6,
+        "Garbage Bags": 15,
+        "Peanuts": 25,
+        "Rice": 23,
+        "Sandals": 29,
+        "Vacuum Cleaner": 4
+      }
+    },
+    {
+      "from": "Pistoia",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Garbage Bags": 11,
+        "Peanuts": 13,
+        "Rice": 12,
+        "Sandals": 24,
+        "Treadmill": 10,
+        "Vacuum Cleaner": 22
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Naples",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Peanuts": 5,
+        "Rice": 4,
+        "Sunscreen": 18,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 20
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Potenza",
+      "merchandise": {
+        "Exercise Ball": 25,
+        "Fertilizer": 16,
+        "Garbage Bags": 22,
+        "Rice": 1
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Bari",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Exercise Ball": 24,
+        "Fertilizer": 14,
+        "Garbage Bags": 18,
+        "Peanuts": 1,
+        "Sandals": 17,
+        "Sunscreen": 18,
+        "Treadmill": 28,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Bari",
+      "to": "Forlì",
+      "merchandise": {
+        "Beach Chair": 17,
+        "Fertilizer": 4,
+        "Garbage Bags": 1,
+        "Peanuts": 1,
+        "Rice": 12,
+        "Sandals": 5,
+        "Sunscreen": 8,
+        "Treadmill": 12,
+        "Vacuum Cleaner": 27
+      }
+    },
+    {
+      "from": "Forlì",
+      "to": "Prato",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Vacuum Cleaner": 30
+      }
+    },
+    {
+      "from": "Prato",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Fertilizer": 4,
+        "Garbage Bags": 4,
+        "Sunscreen": 11,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Vigevano",
+      "merchandise": {
+        "Rice": 6,
+        "Sandals": 3,
+        "Sunscreen": 25
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Molfetta",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Exercise Ball": 16,
+        "Fertilizer": 24,
+        "Garbage Bags": 14,
+        "Peanuts": 15,
+        "Rice": 21,
+        "Sandals": 19,
+        "Sunscreen": 23,
+        "Treadmill": 22,
+        "Vacuum Cleaner": 4
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Vittoria",
+      "merchandise": {
+        "Vacuum Cleaner": 28
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 19,
+        "Fertilizer": 10,
+        "Garbage Bags": 5,
+        "Rice": 9,
+        "Sandals": 3,
+        "Sunscreen": 7,
+        "Treadmill": 13,
+        "Vacuum Cleaner": 16
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Cerignola",
+      "merchandise": {
+        "Exercise Ball": 5,
+        "Fertilizer": 10,
+        "Sunscreen": 6,
+        "Treadmill": 18,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Cerignola",
+      "to": "Treviso",
+      "merchandise": {
+        "Beach Chair": 17,
+        "Exercise Ball": 28,
+        "Garbage Bags": 24,
+        "Peanuts": 9,
+        "Sandals": 9,
+        "Sunscreen": 7,
+        "Treadmill": 9,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Treviso",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Garbage Bags": 8
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Como",
+      "merchandise": {
+        "Beach Chair": 23,
+        "Peanuts": 30,
+        "Rice": 21,
+        "Sandals": 8,
+        "Sunscreen": 20,
+        "Treadmill": 25,
+        "Vacuum Cleaner": 14
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Foggia",
+      "merchandise": {
+        "Exercise Ball": 19,
+        "Fertilizer": 9,
+        "Rice": 28,
+        "Sandals": 5,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Exercise Ball": 5,
+        "Fertilizer": 12,
+        "Peanuts": 26,
+        "Sandals": 15,
+        "Sunscreen": 29,
+        "Vacuum Cleaner": 24
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Genoa",
+      "merchandise": {
+        "Exercise Ball": 15,
+        "Fertilizer": 2,
+        "Garbage Bags": 29,
+        "Rice": 23,
+        "Sunscreen": 11
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Treadmill": 7,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Caltanissetta",
+      "to": "La Spezia",
+      "merchandise": {
+        "Exercise Ball": 3,
+        "Fertilizer": 9,
+        "Garbage Bags": 19,
+        "Peanuts": 11,
+        "Sandals": 18,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Ragusa",
+      "merchandise": {
+        "Beach Chair": 4
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Cesena",
+      "merchandise": {
+        "Sunscreen": 30
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Asti",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Exercise Ball": 21,
+        "Fertilizer": 3,
+        "Garbage Bags": 20,
+        "Peanuts": 22,
+        "Rice": 6,
+        "Sandals": 14,
+        "Sunscreen": 1,
+        "Treadmill": 4,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Asti",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Exercise Ball": 13,
+        "Peanuts": 22,
+        "Sandals": 8
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Alessandria",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Peanuts": 2,
+        "Rice": 13,
+        "Sunscreen": 26,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Exercise Ball": 20
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Palermo",
+      "merchandise": {
+        "Beach Chair": 29,
+        "Garbage Bags": 19,
+        "Peanuts": 13,
+        "Rice": 1,
+        "Sunscreen": 19,
+        "Treadmill": 20,
+        "Vacuum Cleaner": 9
+      }
+    },
+    {
+      "from": "Palermo",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 18,
+        "Exercise Ball": 9,
+        "Fertilizer": 18,
+        "Garbage Bags": 24,
+        "Sunscreen": 18,
+        "Vacuum Cleaner": 16
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Arezzo",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Exercise Ball": 12,
+        "Fertilizer": 9,
+        "Garbage Bags": 6,
+        "Peanuts": 4,
+        "Sandals": 20,
+        "Sunscreen": 21,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Milan",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Fertilizer": 11,
+        "Garbage Bags": 19
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Brescia",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 17,
+        "Fertilizer": 15,
+        "Garbage Bags": 29,
+        "Rice": 14,
+        "Sandals": 18,
+        "Sunscreen": 23
+      }
+    }
+  ],
+  [
+    {
+      "from": "Olbia",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Beach Chair": 22,
+        "Exercise Ball": 16,
+        "Fertilizer": 1,
+        "Garbage Bags": 23,
+        "Peanuts": 10,
+        "Rice": 24,
+        "Sandals": 9,
+        "Sunscreen": 20,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Caltanissetta",
+      "to": "Genoa",
+      "merchandise": {
+        "Fertilizer": 28,
+        "Peanuts": 25,
+        "Rice": 19,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Catania",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 28,
+        "Fertilizer": 5,
+        "Garbage Bags": 25,
+        "Peanuts": 26,
+        "Rice": 30,
+        "Sandals": 1,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Catania",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Exercise Ball": 29,
+        "Fertilizer": 1,
+        "Garbage Bags": 5,
+        "Rice": 2,
+        "Sandals": 20,
+        "Sunscreen": 16,
+        "Treadmill": 24,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Altamura",
+      "merchandise": {
+        "Beach Chair": 12,
+        "Rice": 14,
+        "Sandals": 13
+      }
+    },
+    {
+      "from": "Altamura",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Exercise Ball": 1,
+        "Fertilizer": 5,
+        "Garbage Bags": 24,
+        "Peanuts": 25,
+        "Rice": 10,
+        "Sandals": 7,
+        "Treadmill": 28,
+        "Vacuum Cleaner": 14
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Cesena",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Exercise Ball": 3,
+        "Fertilizer": 16,
+        "Peanuts": 11,
+        "Rice": 3,
+        "Sandals": 25,
+        "Sunscreen": 16,
+        "Treadmill": 27,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Brescia",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Exercise Ball": 27,
+        "Fertilizer": 3,
+        "Garbage Bags": 11,
+        "Peanuts": 28,
+        "Sandals": 13,
+        "Sunscreen": 10,
+        "Treadmill": 21,
+        "Vacuum Cleaner": 8
+      }
+    },
+    {
+      "from": "Brescia",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Exercise Ball": 13,
+        "Fertilizer": 27,
+        "Garbage Bags": 16,
+        "Peanuts": 9,
+        "Rice": 20,
+        "Sandals": 23,
+        "Sunscreen": 26,
+        "Treadmill": 27,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Vittoria",
+      "merchandise": {
+        "Beach Chair": 14,
+        "Fertilizer": 14,
+        "Treadmill": 25
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Cosenza",
+      "merchandise": {
+        "Garbage Bags": 5,
+        "Rice": 1,
+        "Sunscreen": 20,
+        "Treadmill": 1
+      }
+    }
+  ],
+  [
+    {
+      "from": "Como",
+      "to": "Asti",
+      "merchandise": {
+        "Exercise Ball": 21,
+        "Fertilizer": 30,
+        "Garbage Bags": 14,
+        "Peanuts": 5,
+        "Rice": 14,
+        "Sunscreen": 9
+      }
+    },
+    {
+      "from": "Asti",
+      "to": "Afragola",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Exercise Ball": 21,
+        "Garbage Bags": 3,
+        "Rice": 15,
+        "Sandals": 13,
+        "Treadmill": 19,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Tivoli",
+      "merchandise": {
+        "Garbage Bags": 22,
+        "Rice": 21,
+        "Sunscreen": 4,
+        "Vacuum Cleaner": 2
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Carpi",
+      "merchandise": {
+        "Fertilizer": 9,
+        "Garbage Bags": 24,
+        "Sandals": 20,
+        "Sunscreen": 3,
+        "Treadmill": 25
+      }
+    },
+    {
+      "from": "Carpi",
+      "to": "Arezzo",
+      "merchandise": {
+        "Sandals": 9,
+        "Sunscreen": 18
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Treadmill": 23
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Altamura",
+      "merchandise": {
+        "Exercise Ball": 3,
+        "Garbage Bags": 14
+      }
+    },
+    {
+      "from": "Altamura",
+      "to": "Cerignola",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Fertilizer": 30,
+        "Garbage Bags": 27,
+        "Peanuts": 6,
+        "Rice": 6,
+        "Treadmill": 19,
+        "Vacuum Cleaner": 28
+      }
+    },
+    {
+      "from": "Cerignola",
+      "to": "Busto Arsizio",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Garbage Bags": 24,
+        "Peanuts": 30,
+        "Rice": 28,
+        "Sunscreen": 28,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Busto Arsizio",
+      "to": "Parma",
+      "merchandise": {
+        "Beach Chair": 1,
+        "Exercise Ball": 8,
+        "Fertilizer": 11,
+        "Garbage Bags": 14,
+        "Peanuts": 24,
+        "Rice": 16,
+        "Sandals": 5,
+        "Sunscreen": 6,
+        "Treadmill": 19
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Cosenza",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Rice": 3,
+        "Sunscreen": 22,
+        "Treadmill": 29
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Potenza",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Garbage Bags": 6,
+        "Peanuts": 21,
+        "Rice": 11,
+        "Sandals": 26,
+        "Sunscreen": 24,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Piacenza",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 20,
+        "Fertilizer": 18,
+        "Garbage Bags": 1,
+        "Peanuts": 12,
+        "Rice": 25,
+        "Sandals": 25,
+        "Sunscreen": 14,
+        "Treadmill": 19,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Exercise Ball": 11,
+        "Rice": 12,
+        "Sandals": 23
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Brescia",
+      "merchandise": {
+        "Sandals": 25,
+        "Sunscreen": 25
+      }
+    },
+    {
+      "from": "Brescia",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 18,
+        "Rice": 9,
+        "Sandals": 18,
+        "Treadmill": 2
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Genoa",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Exercise Ball": 19,
+        "Fertilizer": 12,
+        "Garbage Bags": 18,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Grosseto",
+      "merchandise": {
+        "Beach Chair": 17,
+        "Exercise Ball": 20,
+        "Fertilizer": 9,
+        "Garbage Bags": 6,
+        "Peanuts": 26,
+        "Rice": 27,
+        "Sandals": 16,
+        "Sunscreen": 23,
+        "Treadmill": 30,
+        "Vacuum Cleaner": 20
+      }
+    },
+    {
+      "from": "Grosseto",
+      "to": "Foggia",
+      "merchandise": {
+        "Beach Chair": 12,
+        "Exercise Ball": 2,
+        "Fertilizer": 10,
+        "Garbage Bags": 13,
+        "Peanuts": 24,
+        "Rice": 20,
+        "Sandals": 27,
+        "Sunscreen": 2,
+        "Treadmill": 18
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Trieste",
+      "merchandise": {
+        "Beach Chair": 5,
+        "Exercise Ball": 20,
+        "Peanuts": 20,
+        "Sandals": 14,
+        "Sunscreen": 3,
+        "Treadmill": 14,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Trieste",
+      "to": "Trento",
+      "merchandise": {
+        "Rice": 15,
+        "Sandals": 13,
+        "Sunscreen": 28
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Palermo",
+      "merchandise": {
+        "Exercise Ball": 15
+      }
+    },
+    {
+      "from": "Palermo",
+      "to": "Milan",
+      "merchandise": {
+        "Exercise Ball": 9,
+        "Fertilizer": 8,
+        "Garbage Bags": 4,
+        "Peanuts": 2,
+        "Rice": 9,
+        "Sandals": 23,
+        "Sunscreen": 30,
+        "Treadmill": 25,
+        "Vacuum Cleaner": 18
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Catania",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Exercise Ball": 11,
+        "Garbage Bags": 29,
+        "Sandals": 5
+      }
+    },
+    {
+      "from": "Catania",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Beach Chair": 4,
+        "Exercise Ball": 13,
+        "Fertilizer": 11,
+        "Garbage Bags": 22,
+        "Peanuts": 9,
+        "Rice": 27,
+        "Sandals": 25,
+        "Sunscreen": 2,
+        "Treadmill": 18,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Fertilizer": 17,
+        "Sunscreen": 2,
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Caltanissetta",
+      "to": "Vigevano",
+      "merchandise": {
+        "Beach Chair": 1,
+        "Fertilizer": 12,
+        "Garbage Bags": 18,
+        "Peanuts": 13,
+        "Rice": 17,
+        "Sandals": 22,
+        "Sunscreen": 14,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Aversa",
+      "merchandise": {
+        "Fertilizer": 3,
+        "Garbage Bags": 16,
+        "Sunscreen": 30
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Treviso",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Exercise Ball": 22,
+        "Fertilizer": 13,
+        "Garbage Bags": 17,
+        "Rice": 23,
+        "Sandals": 26,
+        "Sunscreen": 28,
+        "Vacuum Cleaner": 24
+      }
+    },
+    {
+      "from": "Treviso",
+      "to": "Pistoia",
+      "merchandise": {
+        "Beach Chair": 23,
+        "Exercise Ball": 15,
+        "Fertilizer": 9,
+        "Garbage Bags": 1,
+        "Rice": 8,
+        "Sandals": 29,
+        "Sunscreen": 29,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Pistoia",
+      "to": "Andria",
+      "merchandise": {
+        "Exercise Ball": 24,
+        "Treadmill": 22
+      }
+    },
+    {
+      "from": "Andria",
+      "to": "Molfetta",
+      "merchandise": {
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Naples",
+      "merchandise": {
+        "Exercise Ball": 19,
+        "Sandals": 13
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Fertilizer": 4,
+        "Garbage Bags": 23,
+        "Sandals": 24,
+        "Sunscreen": 27
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Vittoria",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Fertilizer": 30,
+        "Garbage Bags": 8,
+        "Peanuts": 23,
+        "Sandals": 14,
+        "Sunscreen": 13,
+        "Treadmill": 11
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Cesena",
+      "merchandise": {
+        "Sunscreen": 22
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Prato",
+      "merchandise": {
+        "Exercise Ball": 11,
+        "Fertilizer": 19,
+        "Garbage Bags": 9,
+        "Peanuts": 19,
+        "Sunscreen": 22,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Prato",
+      "to": "Forlì",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Exercise Ball": 10,
+        "Fertilizer": 22,
+        "Garbage Bags": 27,
+        "Peanuts": 21,
+        "Rice": 5,
+        "Sandals": 22,
+        "Sunscreen": 23,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Forlì",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Beach Chair": 2,
+        "Exercise Ball": 22,
+        "Fertilizer": 14,
+        "Rice": 2,
+        "Sandals": 4,
+        "Sunscreen": 30,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 8
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Exercise Ball": 12,
+        "Garbage Bags": 20,
+        "Peanuts": 28,
+        "Rice": 28,
+        "Sandals": 28,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Rimini",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 21,
+        "Garbage Bags": 3,
+        "Peanuts": 15
+      }
+    },
+    {
+      "from": "Rimini",
+      "to": "La Spezia",
+      "merchandise": {
+        "Exercise Ball": 11,
+        "Peanuts": 28,
+        "Sandals": 28,
+        "Sunscreen": 28,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Ragusa",
+      "merchandise": {
+        "Beach Chair": 12,
+        "Exercise Ball": 29,
+        "Fertilizer": 24,
+        "Peanuts": 3,
+        "Rice": 20,
+        "Sandals": 4,
+        "Sunscreen": 10,
+        "Treadmill": 18,
+        "Vacuum Cleaner": 30
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Olbia",
+      "merchandise": {
+        "Beach Chair": 14,
+        "Exercise Ball": 21,
+        "Fertilizer": 11,
+        "Garbage Bags": 12,
+        "Peanuts": 9,
+        "Rice": 9,
+        "Sandals": 25,
+        "Sunscreen": 17,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Olbia",
+      "to": "Alessandria",
+      "merchandise": {
+        "Beach Chair": 18,
+        "Exercise Ball": 28,
+        "Fertilizer": 14,
+        "Garbage Bags": 24,
+        "Peanuts": 23,
+        "Sandals": 4,
+        "Sunscreen": 28,
+        "Treadmill": 7,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Bari",
+      "merchandise": {
+        "Exercise Ball": 25,
+        "Garbage Bags": 24,
+        "Peanuts": 20,
+        "Rice": 17,
+        "Sandals": 16,
+        "Sunscreen": 16,
+        "Treadmill": 12,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Bari",
+      "to": "Pesaro",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Fertilizer": 3,
+        "Peanuts": 11,
+        "Rice": 19,
+        "Sandals": 7,
+        "Vacuum Cleaner": 7
+      }
+    },
+    {
+      "from": "Pesaro",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Rice": 9,
+        "Sandals": 29,
+        "Sunscreen": 4,
+        "Treadmill": 4
+      }
+    },
+    {
+      "from": "Pozzuoli",
+      "to": "Agrigento",
+      "merchandise": {
+        "Exercise Ball": 28,
+        "Fertilizer": 3
+      }
+    }
+  ],
+  [
+    {
+      "from": "Bari",
+      "to": "Forlì",
+      "merchandise": {
+        "Garbage Bags": 3,
+        "Rice": 21,
+        "Sandals": 30,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 19
+      }
+    },
+    {
+      "from": "Forlì",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Exercise Ball": 28,
+        "Fertilizer": 15,
+        "Garbage Bags": 1,
+        "Rice": 26,
+        "Sunscreen": 23,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 3
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Naples",
+      "merchandise": {
+        "Sandals": 13,
+        "Sunscreen": 1,
+        "Treadmill": 16
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Arezzo",
+      "merchandise": {
+        "Exercise Ball": 25,
+        "Rice": 19,
+        "Sandals": 24,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Busto Arsizio",
+      "merchandise": {
+        "Fertilizer": 4,
+        "Rice": 8,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Busto Arsizio",
+      "to": "Tivoli",
+      "merchandise": {
+        "Vacuum Cleaner": 23
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Brescia",
+      "merchandise": {
+        "Garbage Bags": 13
+      }
+    },
+    {
+      "from": "Brescia",
+      "to": "Foggia",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Exercise Ball": 12,
+        "Fertilizer": 4,
+        "Garbage Bags": 19,
+        "Peanuts": 24,
+        "Rice": 29,
+        "Sandals": 13,
+        "Sunscreen": 6,
+        "Treadmill": 12,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Genoa",
+      "merchandise": {
+        "Beach Chair": 23,
+        "Garbage Bags": 6,
+        "Peanuts": 1,
+        "Rice": 4,
+        "Sunscreen": 10
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Prato",
+      "merchandise": {
+        "Beach Chair": 14,
+        "Exercise Ball": 14,
+        "Garbage Bags": 17,
+        "Peanuts": 29,
+        "Rice": 12,
+        "Sandals": 5,
+        "Vacuum Cleaner": 9
+      }
+    },
+    {
+      "from": "Prato",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Fertilizer": 11,
+        "Treadmill": 8
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Rimini",
+      "merchandise": {
+        "Beach Chair": 21,
+        "Exercise Ball": 6,
+        "Fertilizer": 2,
+        "Garbage Bags": 28,
+        "Rice": 5,
+        "Sandals": 29,
+        "Sunscreen": 12,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Rimini",
+      "to": "Trieste",
+      "merchandise": {
+        "Beach Chair": 26,
+        "Exercise Ball": 21,
+        "Fertilizer": 27,
+        "Garbage Bags": 26,
+        "Peanuts": 6,
+        "Sandals": 21,
+        "Sunscreen": 30,
+        "Treadmill": 3,
+        "Vacuum Cleaner": 16
+      }
+    },
+    {
+      "from": "Trieste",
+      "to": "La Spezia",
+      "merchandise": {
+        "Exercise Ball": 30
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Catania",
+      "merchandise": {
+        "Beach Chair": 24
+      }
+    },
+    {
+      "from": "Catania",
+      "to": "Cesena",
+      "merchandise": {
+        "Exercise Ball": 11,
+        "Fertilizer": 17,
+        "Garbage Bags": 20,
+        "Rice": 10,
+        "Sandals": 14,
+        "Sunscreen": 13,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Cesena",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Rice": 21,
+        "Sunscreen": 26,
+        "Treadmill": 20,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Grosseto",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Fertilizer": 10,
+        "Rice": 10,
+        "Sunscreen": 13
+      }
+    },
+    {
+      "from": "Grosseto",
+      "to": "Olbia",
+      "merchandise": {
+        "Garbage Bags": 15
+      }
+    },
+    {
+      "from": "Olbia",
+      "to": "Vigevano",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Exercise Ball": 25,
+        "Fertilizer": 17,
+        "Garbage Bags": 9,
+        "Peanuts": 21,
+        "Rice": 3,
+        "Sandals": 18,
+        "Sunscreen": 25,
+        "Treadmill": 8,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Ragusa",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Exercise Ball": 3,
+        "Fertilizer": 3,
+        "Garbage Bags": 18,
+        "Rice": 23,
+        "Sunscreen": 12,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Ragusa",
+      "to": "Andria",
+      "merchandise": {
+        "Exercise Ball": 17,
+        "Garbage Bags": 17,
+        "Peanuts": 13,
+        "Rice": 1,
+        "Sandals": 23,
+        "Sunscreen": 17,
+        "Treadmill": 29,
+        "Vacuum Cleaner": 9
+      }
+    },
+    {
+      "from": "Andria",
+      "to": "Afragola",
+      "merchandise": {
+        "Beach Chair": 30,
+        "Fertilizer": 22,
+        "Garbage Bags": 10,
+        "Sandals": 13,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Milan",
+      "merchandise": {
+        "Beach Chair": 20
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Parma",
+      "merchandise": {
+        "Rice": 4
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Agrigento",
+      "merchandise": {
+        "Beach Chair": 22,
+        "Exercise Ball": 20,
+        "Fertilizer": 15,
+        "Garbage Bags": 19,
+        "Peanuts": 12,
+        "Rice": 21,
+        "Sandals": 17,
+        "Sunscreen": 14,
+        "Treadmill": 9,
+        "Vacuum Cleaner": 21
+      }
+    },
+    {
+      "from": "Agrigento",
+      "to": "Potenza",
+      "merchandise": {
+        "Beach Chair": 2,
+        "Exercise Ball": 5,
+        "Fertilizer": 18,
+        "Garbage Bags": 10,
+        "Peanuts": 21,
+        "Sandals": 1,
+        "Sunscreen": 26,
+        "Vacuum Cleaner": 1
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Cerignola",
+      "merchandise": {
+        "Beach Chair": 19,
+        "Exercise Ball": 28,
+        "Fertilizer": 27,
+        "Garbage Bags": 13,
+        "Peanuts": 29,
+        "Rice": 11,
+        "Sunscreen": 20,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 4
+      }
+    },
+    {
+      "from": "Cerignola",
+      "to": "Perugia",
+      "merchandise": {
+        "Fertilizer": 19,
+        "Garbage Bags": 1,
+        "Rice": 25
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Piacenza",
+      "merchandise": {
+        "Beach Chair": 30,
+        "Exercise Ball": 22,
+        "Fertilizer": 1,
+        "Garbage Bags": 30,
+        "Peanuts": 26,
+        "Rice": 28,
+        "Sandals": 11,
+        "Sunscreen": 6,
+        "Treadmill": 6,
+        "Vacuum Cleaner": 8
+      }
+    },
+    {
+      "from": "Piacenza",
+      "to": "Vittoria",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Fertilizer": 22,
+        "Garbage Bags": 26,
+        "Rice": 20,
+        "Sunscreen": 8,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Alessandria",
+      "merchandise": {
+        "Exercise Ball": 14,
+        "Fertilizer": 4,
+        "Garbage Bags": 28,
+        "Sunscreen": 25
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Cosenza",
+      "merchandise": {
+        "Beach Chair": 27,
+        "Exercise Ball": 29,
+        "Fertilizer": 24,
+        "Garbage Bags": 6,
+        "Peanuts": 24,
+        "Rice": 29,
+        "Sandals": 3,
+        "Sunscreen": 10,
+        "Treadmill": 26,
+        "Vacuum Cleaner": 12
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Beach Chair": 29,
+        "Exercise Ball": 13,
+        "Peanuts": 22,
+        "Rice": 28,
+        "Sandals": 3,
+        "Sunscreen": 10,
+        "Treadmill": 22,
+        "Vacuum Cleaner": 27
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Molfetta",
+      "merchandise": {
+        "Beach Chair": 10,
+        "Exercise Ball": 23,
+        "Fertilizer": 20,
+        "Garbage Bags": 28,
+        "Peanuts": 5,
+        "Sandals": 18,
+        "Sunscreen": 6,
+        "Treadmill": 25,
+        "Vacuum Cleaner": 22
+      }
+    },
+    {
+      "from": "Molfetta",
+      "to": "Como",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Fertilizer": 27,
+        "Garbage Bags": 9,
+        "Peanuts": 15,
+        "Rice": 18,
+        "Sunscreen": 24,
+        "Treadmill": 24,
+        "Vacuum Cleaner": 6
+      }
+    },
+    {
+      "from": "Como",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Fertilizer": 22,
+        "Garbage Bags": 11,
+        "Peanuts": 23,
+        "Sandals": 17,
+        "Treadmill": 22,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Caltanissetta",
+      "to": "Pozzuoli",
+      "merchandise": {
+        "Exercise Ball": 25,
+        "Garbage Bags": 16,
+        "Rice": 1,
+        "Sandals": 24,
+        "Sunscreen": 5,
+        "Vacuum Cleaner": 4
+      }
+    }
+  ],
+  [
+    {
+      "from": "Piacenza",
+      "to": "Vittoria",
+      "merchandise": {
+        "Beach Chair": 20,
+        "Exercise Ball": 4,
+        "Fertilizer": 13,
+        "Garbage Bags": 20,
+        "Rice": 26,
+        "Sandals": 26,
+        "Treadmill": 4
+      }
+    },
+    {
+      "from": "Vittoria",
+      "to": "Reggio Emilia",
+      "merchandise": {
+        "Fertilizer": 18,
+        "Garbage Bags": 11,
+        "Peanuts": 22,
+        "Sandals": 20
+      }
+    },
+    {
+      "from": "Reggio Emilia",
+      "to": "Genoa",
+      "merchandise": {
+        "Beach Chair": 28,
+        "Exercise Ball": 1,
+        "Fertilizer": 7,
+        "Garbage Bags": 22,
+        "Peanuts": 5,
+        "Sandals": 30,
+        "Sunscreen": 23,
+        "Treadmill": 14,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Genoa",
+      "to": "Carpi",
+      "merchandise": {
+        "Beach Chair": 29,
+        "Exercise Ball": 17
+      }
+    },
+    {
+      "from": "Carpi",
+      "to": "La Spezia",
+      "merchandise": {
+        "Beach Chair": 7,
+        "Exercise Ball": 22,
+        "Fertilizer": 18,
+        "Sandals": 3,
+        "Sunscreen": 28,
+        "Treadmill": 15,
+        "Vacuum Cleaner": 18
+      }
+    },
+    {
+      "from": "La Spezia",
+      "to": "Vigevano",
+      "merchandise": {
+        "Exercise Ball": 8,
+        "Fertilizer": 10,
+        "Garbage Bags": 3,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Vigevano",
+      "to": "Cosenza",
+      "merchandise": {
+        "Beach Chair": 19,
+        "Exercise Ball": 25,
+        "Garbage Bags": 23,
+        "Sandals": 8,
+        "Treadmill": 22,
+        "Vacuum Cleaner": 26
+      }
+    },
+    {
+      "from": "Cosenza",
+      "to": "Fiumicino",
+      "merchandise": {
+        "Beach Chair": 11,
+        "Exercise Ball": 11,
+        "Fertilizer": 24,
+        "Garbage Bags": 9,
+        "Peanuts": 27,
+        "Rice": 5
+      }
+    },
+    {
+      "from": "Fiumicino",
+      "to": "Tivoli",
+      "merchandise": {
+        "Beach Chair": 12,
+        "Fertilizer": 16,
+        "Garbage Bags": 24,
+        "Peanuts": 20,
+        "Rice": 9,
+        "Sandals": 21,
+        "Sunscreen": 1,
+        "Vacuum Cleaner": 20
+      }
+    },
+    {
+      "from": "Tivoli",
+      "to": "Olbia",
+      "merchandise": {
+        "Sandals": 5,
+        "Sunscreen": 14
+      }
+    },
+    {
+      "from": "Olbia",
+      "to": "Milan",
+      "merchandise": {
+        "Beach Chair": 15,
+        "Exercise Ball": 5,
+        "Fertilizer": 30,
+        "Garbage Bags": 8,
+        "Peanuts": 30,
+        "Rice": 15,
+        "Sandals": 3,
+        "Sunscreen": 15,
+        "Vacuum Cleaner": 18
+      }
+    },
+    {
+      "from": "Milan",
+      "to": "Afragola",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Exercise Ball": 17,
+        "Sandals": 2,
+        "Sunscreen": 19,
+        "Treadmill": 20,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Afragola",
+      "to": "Arezzo",
+      "merchandise": {
+        "Exercise Ball": 2,
+        "Fertilizer": 14,
+        "Garbage Bags": 9,
+        "Peanuts": 23,
+        "Rice": 3,
+        "Sandals": 12,
+        "Sunscreen": 13,
+        "Vacuum Cleaner": 25
+      }
+    },
+    {
+      "from": "Arezzo",
+      "to": "Trento",
+      "merchandise": {
+        "Beach Chair": 25,
+        "Garbage Bags": 29,
+        "Peanuts": 21,
+        "Treadmill": 12,
+        "Vacuum Cleaner": 17
+      }
+    },
+    {
+      "from": "Trento",
+      "to": "Castellammare di Stabia",
+      "merchandise": {
+        "Beach Chair": 3,
+        "Exercise Ball": 23,
+        "Fertilizer": 5,
+        "Garbage Bags": 11,
+        "Peanuts": 16,
+        "Rice": 8,
+        "Sandals": 23,
+        "Sunscreen": 6,
+        "Treadmill": 11,
+        "Vacuum Cleaner": 11
+      }
+    },
+    {
+      "from": "Castellammare di Stabia",
+      "to": "Asti",
+      "merchandise": {
+        "Beach Chair": 1,
+        "Exercise Ball": 22,
+        "Fertilizer": 16,
+        "Garbage Bags": 10,
+        "Sandals": 17,
+        "Sunscreen": 13,
+        "Treadmill": 16,
+        "Vacuum Cleaner": 1
+      }
+    },
+    {
+      "from": "Asti",
+      "to": "Potenza",
+      "merchandise": {
+        "Beach Chair": 8,
+        "Fertilizer": 9,
+        "Garbage Bags": 25,
+        "Peanuts": 2,
+        "Sandals": 27,
+        "Sunscreen": 4
+      }
+    },
+    {
+      "from": "Potenza",
+      "to": "Aversa",
+      "merchandise": {
+        "Exercise Ball": 27,
+        "Fertilizer": 3,
+        "Rice": 7,
+        "Sandals": 25,
+        "Sunscreen": 23,
+        "Treadmill": 23,
+        "Vacuum Cleaner": 5
+      }
+    },
+    {
+      "from": "Aversa",
+      "to": "Sesto San Giovanni",
+      "merchandise": {
+        "Treadmill": 9,
+        "Vacuum Cleaner": 25
+      }
+    },
+    {
+      "from": "Sesto San Giovanni",
+      "to": "Perugia",
+      "merchandise": {
+        "Beach Chair": 28,
+        "Exercise Ball": 26,
+        "Garbage Bags": 7,
+        "Peanuts": 19,
+        "Rice": 10,
+        "Sunscreen": 15,
+        "Treadmill": 13
+      }
+    },
+    {
+      "from": "Perugia",
+      "to": "Moncalieri",
+      "merchandise": {
+        "Beach Chair": 6,
+        "Exercise Ball": 6,
+        "Fertilizer": 1,
+        "Peanuts": 5
+      }
+    },
+    {
+      "from": "Moncalieri",
+      "to": "Forlì",
+      "merchandise": {
+        "Beach Chair": 19,
+        "Treadmill": 7
+      }
+    },
+    {
+      "from": "Forlì",
+      "to": "Grosseto",
+      "merchandise": {
+        "Peanuts": 3,
+        "Vacuum Cleaner": 15
+      }
+    },
+    {
+      "from": "Grosseto",
+      "to": "Prato",
+      "merchandise": {
+        "Beach Chair": 4,
+        "Exercise Ball": 16,
+        "Sunscreen": 10,
+        "Treadmill": 26
+      }
+    },
+    {
+      "from": "Prato",
+      "to": "Foggia",
+      "merchandise": {
+        "Fertilizer": 14
+      }
+    },
+    {
+      "from": "Foggia",
+      "to": "Trieste",
+      "merchandise": {
+        "Beach Chair": 13,
+        "Sandals": 7
+      }
+    },
+    {
+      "from": "Trieste",
+      "to": "Naples",
+      "merchandise": {
+        "Beach Chair": 30,
+        "Garbage Bags": 25,
+        "Sunscreen": 25,
+        "Treadmill": 10
+      }
+    },
+    {
+      "from": "Naples",
+      "to": "Pesaro",
+      "merchandise": {
+        "Garbage Bags": 24,
+        "Sunscreen": 29,
+        "Vacuum Cleaner": 13
+      }
+    },
+    {
+      "from": "Pesaro",
+      "to": "Parma",
+      "merchandise": {
+        "Beach Chair": 23,
+        "Fertilizer": 22,
+        "Peanuts": 8,
+        "Sunscreen": 24
+      }
+    },
+    {
+      "from": "Parma",
+      "to": "Bolzano-Bozen",
+      "merchandise": {
+        "Beach Chair": 9,
+        "Exercise Ball": 7,
+        "Fertilizer": 17,
+        "Garbage Bags": 2,
+        "Peanuts": 20,
+        "Rice": 27,
+        "Sandals": 27,
+        "Sunscreen": 23,
+        "Treadmill": 18,
+        "Vacuum Cleaner": 16
+      }
+    },
+    {
+      "from": "Bolzano-Bozen",
+      "to": "Treviso",
+      "merchandise": {
+        "Peanuts": 15,
+        "Rice": 30,
+        "Sandals": 22,
+        "Treadmill": 1,
+        "Vacuum Cleaner": 29
+      }
+    },
+    {
+      "from": "Treviso",
+      "to": "Alessandria",
+      "merchandise": {
+        "Beach Chair": 16,
+        "Fertilizer": 27,
+        "Garbage Bags": 12,
+        "Peanuts": 6,
+        "Rice": 3,
+        "Sandals": 20,
+        "Sunscreen": 11,
+        "Treadmill": 8
+      }
+    },
+    {
+      "from": "Alessandria",
+      "to": "Caltanissetta",
+      "merchandise": {
+        "Beach Chair": 12,
+        "Exercise Ball": 12,
+        "Garbage Bags": 14,
+        "Peanuts": 10,
+        "Rice": 16,
+        "Sandals": 13,
+        "Sunscreen": 2,
+        "Treadmill": 24,
+        "Vacuum Cleaner": 29
+      }
+    }
+  ]
+]
