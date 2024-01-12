@@ -15,6 +15,7 @@ from sklearn.cluster import KMeans
 from sklearn.cluster import HDBSCAN, DBSCAN
 from scipy.spatial.distance import cosine
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics import pairwise_distances
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -363,11 +364,286 @@ def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=
     
     return similarity_matrix
 
+def minhash_matrices(matrix1,matrix2,num_of_hashes):
+    (n_row, n_col) = matrix1.shape
+    next_prime = n_col
+    hash_code = hash_function_hash_code(num_of_hashes,n_col,next_prime)
+
+    signature1_array = np.empty(shape = (n_row,num_of_hashes))
+    signature2_array = np.empty(shape = (matrix2.shape[0],num_of_hashes))
+
+    #t2 = time.time()
+
+    for row in tqdm(range(n_row), desc="minhashing"):
+        #print("row", row)
+        ones_index = np.where(matrix1[row,:]==1)[0]
+        #if len(ones_index) == 0:
+        signature1_array[row,:] = np.zeros((1,num_of_hashes))
+
+            #continue
+        corresponding_hashes = hash_code[:,ones_index]
+        #print("ones_index", ones_index.shape, ones_index)
+        #print("corresponding_hashes", corresponding_hashes.shape, corresponding_hashes)
+        row_signature = np.amin(corresponding_hashes,axis=1).reshape((1,num_of_hashes))
+
+        signature1_array[row,:] = row_signature
+
+    for row in tqdm(range(matrix2.shape[0]), desc="minhashing second matrix"):
+        #print("row", row)
+        ones_index = np.where(matrix2[row,:]==1)[0]
+        #if len(ones_index) == 0:
+        signature2_array[row,:] = np.zeros((1,num_of_hashes))
+
+            #continue
+        corresponding_hashes = hash_code[:,ones_index]
+        #print("ones_index", ones_index.shape, ones_index)
+        #print("corresponding_hashes", corresponding_hashes.shape, corresponding_hashes)
+        row_signature = np.amin(corresponding_hashes,axis=1).reshape((1,num_of_hashes))
+
+        signature2_array[row,:] = row_signature
+
+    return signature1_array, signature2_array
+
+
+def similarity_minhash_lsh_two_matrices_and_merch(matrix1, matrix1Merch, matrix2, matrix2Merch, thresh_user=0.2):
+    
+    similarity_matrix = lsh_two_matrices(matrix1,matrix2, thresh_user=thresh_user)
+    # print("similarity_matrix", similarity_matrix.shape, similarity_matrix)
+
+    # uniqueRowsSet = set([i for i, j in pairs] + [j for i, j in pairs]) # (1,2) (1,4) (1,5)
+    # neverSeen = set([i for i in range(matrix1.shape[0])]) - uniqueRowsSet
+    
+
+    # sortedUniqueRowsSet = sorted(list(uniqueRowsSet))
+    # print("sortedUniqueRowsSet", sortedUniqueRowsSet)
+
+    # subset_matrix1 = matrix1[sortedUniqueRowsSet]
+    # subset_matrix1Merch = matrix1Merch[sortedUniqueRowsSet]
+    # print("subset_matrix1", subset_matrix1.shape, subset_matrix1[0])
+    # print("subset_matrix1Merch", subset_matrix1Merch.shape, subset_matrix1Merch[0])
+
+    # subset_matrix2 = matrix2[sortedUniqueRowsSet]
+    # subset_matrix2Merch = matrix2Merch[sortedUniqueRowsSet]
+    # print("subset_matrix2", subset_matrix2.shape, subset_matrix2[0])
+    # print("subset_matrix2Merch", subset_matrix2Merch.shape, subset_matrix2Merch[0])
+
+    # subset_similarity_matrix = np.full((subset_matrix1.shape[0], subset_matrix2.shape[0]), np.inf)
+        
+    print("Computing distance  on subset matrix...")
+    with ProgressBar(total=matrix1.shape[0]) as progress:
+        similarity_matrix = compute_distance_pairs_merch(similarity_matrix, matrix1, matrix1Merch, matrix2, matrix2Merch, progress)
+        
+    return similarity_matrix
+
+@jit(cache=True)
+def compute_distance_pairs_merch(sim_matrix, matrix1, matrix1Merch, matrix2, matrix2Merch, progress_proxy):
+    n = sim_matrix.shape[0]
+    m = sim_matrix.shape[1]
+    squareMatrix = np.full((matrix1Merch.shape[0], matrix2Merch.shape[1]), 2)
+    # print("sim_matrix", sim_matrix.shape)    
+    # print(numba.typeof(sim_matrix))
+    # print(numba.typeof(matrix1))
+    # print(numba.typeof(matrix1Merch))
+    # print(numba.typeof(matrix2))
+    # print(numba.typeof(matrix2Merch))
+    # print(numba.typeof(progress_proxy))
+
+    
+
+    for i in prange(n):
+        subset1 = matrix1[i].reshape(1, -1) #replicate_row(subset_matrix, i) 
+        # print("subset1", subset1.shape)
+        subset2 = matrix2[sim_matrix[i].nonzero()[1]]
+        # print("subset2", subset2.shape)
+        min_matrix = np.minimum(subset1, subset2)
+        sum_min_matrix = np.sum(min_matrix, axis=-1)
+        
+        max_matrix = np.maximum(subset1, subset2)
+        sum_max_matrix = np.sum(max_matrix, axis=-1)
+
+        route_distance = (np.divide(sum_min_matrix, sum_max_matrix))
+        #print("route_distance", route_distance.shape)
+
+        subset1Merch = matrix1Merch[i].reshape(1, -1) #replicate_row(subset_matrixMerch, i)
+        subset2Merch = matrix2Merch[sim_matrix[i].nonzero()[1]]
+        #normsSubset2Merch = np.sqrt(np.sum(np.power(subset2Merch, squareMatrix), axis=1))
+        # print("subset1Merch", subset1Merch.shape)
+        # print("subset2Merch", subset2Merch.shape)
+        
+        # COSINE
+        #distMerch = 1 - (((subset1Merch * subset2Merch).sum(axis=1) / (np.sqrt(np.sum(np.power(subset1Merch, squareMatrix),axis=1)) * normsSubset2Merch)) + 1) / 2
+        
+        # JACCARD
+        min_matrixMerch = np.minimum(subset1Merch, subset2Merch)
+        sum_min_matrixMerch = np.sum(min_matrixMerch, axis=-1)
+
+        max_matrixMerch = np.maximum(subset1Merch, subset2Merch)
+        sum_max_matrixMerch = np.sum(max_matrixMerch, axis=-1)
+
+        merch_distance = (np.divide(sum_min_matrixMerch, sum_max_matrixMerch))
+        #print("merch_distance", merch_distance.shape)
+        
+        # L2
+        # merch_distance = np.sqrt(np.sum(np.square(subset1Merch - subset2Merch), axis=-1))
 
 
 
+        # mean
+        sim_matrix[i,sim_matrix[i].nonzero()[1]] = (0.5) * route_distance + (0.5) * merch_distance
+        
+        # product
+        #sim_matrix[i,sim_matrix[i].nonzero()[1]] = route_distance * merch_distance
+        
+        # weighted product
+        # weightsRoutes = np.full(sim_matrix[i].nonzero()[1].shape[0], 0.8)
+        # weightsMerch = np.full(sim_matrix[i].nonzero()[1].shape[0], 0.2)
+        # sim_matrix[i,sim_matrix[i].nonzero()[1]] = np.power(route_distance, weightsRoutes) * np.power(merch_distance, weightsMerch)
+        
+        progress_proxy.update(1)
+    
+    return sim_matrix
+
+def lsh_two_matrices(minhash_matrix1, minhash_matrix2, thresh_user=0.2):
+    # Initialize the signature matrix
+    columns = minhash_matrix1.shape[1]
+    
+    # Generate the hash functions
+    # hash_functions = [lambda x, a=a, b=b: (a * x + b) % minhash_matrix.shape[1] for a, b in zip(random.sample(range(1000), bands), random.sample(range(1000), bands))]
+    # hash_function = lambda x: hash(",".join([str(x[i]) for i in range(len(x))]))
+    
+    def hash_function(x):
+        # print("x",x)
+        var = hash(",".join([str(x[i]) for i in range(len(x))]))
+        # print ("str x ", (",".join([(x[i]) for i in range(len(x))])))
+        # print ("var", var)
+        return var % minhash_matrix1.shape[0]
 
 
+    # b = bands
+    # r = columns//bands
+    b, r = find_band_and_row_values(columns, thresh_user)
+    # If columns is not divisible by bands
+    if columns % b != 0:
+        # Find the closest number that makes it divisible
+        while columns % b != 0:
+            b -= 1
+        r = columns // b
+        
+    print("final bands", b)
+    signature_matrix1 = np.full((minhash_matrix1.shape[0], b), np.inf)
+    signature_matrix2 = np.full((minhash_matrix2.shape[0], b), np.inf)
+    
+
+    threshold = (1 / b) ** (1 / r) 
+    print("lsh threshold", threshold)
+    
+    # # For each band
+    # print("Computing hash values of bands...")
+    # hash_values1 = np.apply_along_axis(lambda x: hash_function(x) % minhash_matrix1.shape[0], 1, minhash_matrix1.reshape(-1, r))
+    # print("hash_values1", hash_values1.shape, hash_values1)
+    # hash_values2 = np.apply_along_axis(lambda x: hash_function(x) % minhash_matrix2.shape[0], 1, minhash_matrix2.reshape(-1, r))
+    # print("hash_values2", hash_values2.shape, hash_values2)
+
+    print("minhash_matrix1.reshape(-1, r).shape",minhash_matrix1.reshape(-1, r).shape)
+
+    # For each band
+    print("Computing hash values of bands...")
+    hash_values1 = np.apply_along_axis(hash_function, 1, minhash_matrix1.reshape(-1, r))
+    # print("hash_values1", hash_values1.shape, hash_values1)
+    hash_values2 = np.apply_along_axis(hash_function, 1, minhash_matrix2.reshape(-1, r))
+    # print("hash_values2", hash_values2.shape, hash_values2)
+
+
+    # Reshape the hash values to match the signature matrix
+    hash_values1 = hash_values1.reshape(minhash_matrix1.shape[0], b)
+    # print("hash_values1", hash_values1.shape, hash_values1)
+    hash_values2 = hash_values2.reshape(minhash_matrix2.shape[0], b)
+    # print("hash_values2", hash_values2.shape, hash_values2) 
+    # Update the signature matrix
+    signature_matrix1 = hash_values1
+    signature_matrix2 = hash_values2
+    
+    
+    # find candidate pairs
+    print("Finding candidate pairs...")
+    # similarities_actual=[]
+    # candidate_pairs = np.empty((minhash_matrix1.shape[0], 2))
+
+    data=[]
+    rows=[]
+    cols=[]
+
+    for i in tqdm(range(signature_matrix1.shape[0])):
+        # Compute the similarity of the current row with all following rows
+        similarities = np.sum(signature_matrix2 == signature_matrix1[i, :], axis=1) / b
+        # print("similarities", similarities.shape, similarities)
+        # Find the indices of the rows that have a similarity greater than or equal to the threshold
+        indices = np.nonzero(similarities >= threshold)[0]
+        # print("indices", indices.shape, indices)
+
+        # print("similarities[indices] ",similarities[indices])
+
+        data.extend(similarities[indices])
+        # print("data", data)
+        rows.extend([i]*len(indices))
+        # print("rows", rows)
+        cols.extend(indices)
+        # print("cols", cols)
+        # indexMax = np.argmax(similarities)
+        # simMax = similarities[indexMax]
+        # # Add the pairs to the candidate pairs
+        # #candidate_pairs.extend((i, i+1+index) for index in indices)
+        # candidate_pairs[i] = [indexMax, simMax]
+        # similarities_actual.append(similarities)
+
+        
+
+    # # Create data array for COO matrix
+    # data = np.concatenate([subset_sim_matrix[indices_i, indices_j], subset_sim_matrix[indices_i, indices_j]])
+    
+    # # Create row and column index arrays for COO matrix
+    # rows = np.concatenate([indices_i_mapped, indices_j_mapped])
+    # cols = np.concatenate([indices_j_mapped, indices_i_mapped])
+    # print("data", data)
+    # print("rows", rows)
+    # print("cols", cols)
+
+    similarity_matrix = coo_matrix((data, (rows, cols)), shape=(minhash_matrix1.shape[0], minhash_matrix2.shape[0])).tocsr()
+
+    return similarity_matrix
+
+def mapping_back(indices, mapping):
+        new_indices = []
+        for key, value in mapping.items():
+            new_indices.append(indices[value])
+        return new_indices
+                  
+def create_binary_matrix(routeSets):
+    uniqueShingles = list(set(shingle for route in routeSets for shingle in route[1]))
+    print("uniqueShingles", len(uniqueShingles))
+
+    # Create a dictionary that maps each shingle to its index
+    shingle_to_index = {shingle: index for index, shingle in enumerate(uniqueShingles)}
+    print("shingle_to_index", len(shingle_to_index))
+
+    binaryMatrix = np.zeros((len(routeSets), len(uniqueShingles)), dtype=int)
+
+    for i, route in enumerate(routeSets):
+        #print("i", i)
+        # Get the indices of the shingles in this route
+        indices = [shingle_to_index[shingle] for shingle in route[1]]
+        # Use advanced indexing to set the corresponding elements in the binary matrix to 1
+        binaryMatrix[i, indices] = 1
+
+    return binaryMatrix
+
+def mapping_clustroid(labels: list, cluster_idx, point_idx):
+    counter = 0
+    for i,label in enumerate(labels):
+        if label == cluster_idx:
+            if counter == point_idx:
+                return i
+            counter += 1
 
 # Main
 
@@ -443,6 +719,7 @@ def main():
     # get the unique cities and items of the standard data
     cities = []
     items = []
+    drivers = []
     longestRoute = 0
     shortestRoute = np.inf
     maxItemQuantity = 0
@@ -473,6 +750,7 @@ def main():
         idS = s['id']
         route = s['route']
         idStandard = s['sroute']
+        drivers.append(s['driver'])
         actualRefStandardIds.append(int(idStandard[1]))
         for trip in route:
             cities.append(trip['from'])
@@ -493,6 +771,8 @@ def main():
     uniqueCities = sorted(list(set(cities)))
     #uniqueCities.insert(0, 'NULL')          # add NULL city, for padding vectors with different lengths (trips in routes)
     uniqueItems = sorted(list(set(items)))
+    # find the unique drivers
+    uniqueDrivers = sorted(list(set(drivers)))
 
     print("\nSorted cities and items")
 
@@ -516,9 +796,11 @@ def main():
 
     print("\nUnique cities: ", uniqueCities)
     print("Unique items: ", uniqueItems)
+    print("Unique drivers: ", uniqueDrivers)
 
     print("\nNumber of cities: ", len(uniqueCities))
     print("Number of items: ", len(uniqueItems))
+    print("Number of drivers: ", len(uniqueDrivers))
 
     print("\nLongest route: ", longestRoute)
     print("Shortest route: ", shortestRoute)
@@ -564,7 +846,8 @@ def main():
 
     print("Minhashing route matrix...")    
     num_hash_functions = find_num_hashes_minhash(route_matrix)
-    route_matrix = minhash(route_matrix, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+    #route_matrix = minhash(route_matrix, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+    route_matrix, route_matrix_standard = minhash_matrices(route_matrix, route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
     print("\nroute_matrix minhash", route_matrix.shape, route_matrix[0])
     # binary matrix where each row represents merchandise
 
@@ -574,47 +857,128 @@ def main():
     print("\nmerch_matrix", merch_matrix.shape, merch_matrix)
     print("merch_matrix contains nan", np.isnan(merch_matrix).any())
 
-    print("Computing Jaccard similarity route matrix...")
-    actualSetsDistances = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=0.7)
-    #route_similarity = jaccard_similarity_matrix(route_matrix)
-    print("\nactualSetsDistances", type(actualSetsDistances), actualSetsDistances.shape,actualSetsDistances[0, 0], actualSetsDistances[0])
-
-
-
-
-
-
-    # # compute Jaccard similarity for each matrix
+    # compute Jaccard similarity for each matrix
     # print("Computing Jaccard similarity route matrix...")
     # route_similarity = jaccard_similarity_minhash_lsh(route_matrix, thresh_user=0.4)
     # #route_similarity = jaccard_similarity_matrix(route_matrix)
-    # print("\nroute_similarity", route_similarity.shape, route_similarity[0])
+    # print("\nroute_similarity", type(route_similarity), route_similarity.shape,route_similarity[0, 0], route_similarity[0])
     # #merch_similarity = jaccard_similarity_matrix_merch(merch_matrix)
     # print("Computing Jaccard similarity merchandise matrix...")
-    # merch_similarity = similarity_matrix_merch(merch_matrix)
-    # print("\nmerch_similarity", merch_similarity.shape, merch_similarity[0])
+    # #merch_similarity = similarity_matrix_merch(merch_matrix)
+    # merch_similarity_lsh = jaccard_similarity_minhash_lsh(merch_matrix, thresh_user=0.4)
+    # print("\nmerch_similarity", type(merch_similarity_lsh), merch_similarity_lsh.shape, merch_similarity_lsh[0])
+
+    print("Computing Jaccard similarity route matrix...")
+    actualSetsDistances, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=0.0)
+    #route_similarity = jaccard_similarity_matrix(route_matrix)
+    print("\nactualSetsDistances", type(actualSetsDistances), actualSetsDistances.shape,actualSetsDistances[0, 0], actualSetsDistances[0])
+    print("map indices back", map_indices_back)
+
 
     # # compute final Jaccard distance
-    # actualSetsDistances = route_similarity * merch_similarity
+    # print("Multiplying Jaccard similarities...")
+    # actualSetsDistances = (route_similarity.multiply(merch_similarity_lsh))
     # actualSetsDistances = np.nan_to_num(actualSetsDistances, nan=0)
-    # actualSetsDistances = 1 - actualSetsDistances
-    # print("\nactualSetsDistances", actualSetsDistances.shape, actualSetsDistances[0])
+    #actualSetsDistances = 1 - actualSetsDistances
+    #print("\nactualSetsDistances", actualSetsDistances.shape, actualSetsDistances[0, 0], actualSetsDistances[0])
+
+    # TASK 2
+    print("\n\nTASK 2 ESSENTIALS\n\n")
 
     # standardToActualSetsDistances = None
-    # #route_matrix_standard = create_binary_matrix(standardSets)
-    # print("\nroute_matrix_standard", route_matrix_standard.shape, route_matrix_standard[0])
-    # route_matrix_standard = minhash(route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
-    # print("\nroute_matrix_standard minhash", route_matrix_standard.shape, route_matrix_standard[0])
+    #route_matrix_standard = create_binary_matrix(standardSets)
+    print("Minhashing standard route matrix...")
+    print("\nroute_matrix_standard", route_matrix_standard.shape, route_matrix_standard[0])
+    #route_matrix_standard = minhash(route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+    print("\nroute_matrix_standard minhash", route_matrix_standard.shape, route_matrix_standard[0])
 
-    # merch_matrix_standard = np.array([s[2] for s in standardSets])
+    merch_matrix_standard = np.array([s[2] for s in standardSets])
 
-    # route_similarity_standard_to_actual = jaccard_similarity_minhash_lsh_two_matrices(route_matrix, route_matrix_standard, thresh_user=0.2)
-    # print("\nroute_similarity_standard_to_actual", route_similarity_standard_to_actual.shape, route_similarity_standard_to_actual[0])
+    route_similarity_standard_to_actual = similarity_minhash_lsh_two_matrices_and_merch(route_matrix, merch_matrix, route_matrix_standard, merch_matrix_standard, thresh_user=0.0)
+    print("\nroute_similarity_standard_to_actual", route_similarity_standard_to_actual.shape, route_similarity_standard_to_actual[0])
+
+    ## TASK 3
+    ## Dictionary containing all the Sets [idx, [shingles], [quantity-hot merch]] for all the drivers
+    actualDriverSets = {}
+    for driver in uniqueDrivers:
+        dfActualDriver = dfActual[dfActual['driver'] == driver]
+        actualDriverSets[driver] = createShingles(dfActualDriver, k=K_SHINGLES, uniqueCities=uniqueCities, uniqueItems=uniqueItems, longestRoute=longestRoute, maxItemQuantity=maxItemQuantity, permutations=permutations)
+
+    ## Dictionary containing the distance matrix for all the drivers
+    driversDistances = {}
+    driversIndicesBack = {}
+    for driver, driverSet in actualDriverSets.items():
+        
+        driver_indices = [i[0] for i in driverSet]
+        route_matrix = create_binary_matrix(driverSet)
+
+        num_hash_functions = find_num_hashes_minhash(route_matrix)
+        route_matrix = minhash(route_matrix, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+
+        merch_matrix = np.array([s[2] for s in driverSet])
+
+        actualSetsDistances, mapping= jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=0.2)
+
+        driver_indices = mapping_back(driver_indices, mapping)
+
+        driversDistances[driver] = actualSetsDistances
+        driversIndicesBack[driver] = driver_indices
 
 
+    forward_expansion = len(dfActual) // len(dfStandard)
+    best_clustroids = []
 
+    driversClustersPoints = {}
+    driversLabels = {}
+    driversClusterLabels = {}
+    driversIdealPoint = {}
+    driversIdealIndex = {}
 
+    for driver, driverDistance in driversDistances.items():
+        print('performing DBSCAN for driver ', driver)
 
+        #print(f'best min {best_min} best max {best_max}')
+        hdb = HDBSCAN(min_cluster_size=2, max_cluster_size=forward_expansion, metric="precomputed", store_centers=None,allow_single_cluster=False ).fit(driverDistance.copy())
+        print(f"num clusters found for driver {driver}: {len(set(hdb.labels_))}")
+        print('labels: ', hdb.labels_)
+        labels = hdb.labels_
+
+        ## Selecting the cluster that has the higher intra-cluster similarity
+        # Compute pairwise similarity/distance matrix within clusters
+        pairwise_similarities = []
+        for label in np.unique(labels):
+            if label == -1:
+                continue
+            cluster_points = driverDistance[labels == label]
+            pairwise_similarity = 1 - pairwise_distances(cluster_points, metric='euclidean')
+            
+            pairwise_similarities.append(pairwise_similarity)
+        # Compute the average similarity within each cluster
+        avg_similarities = [np.mean(similarity) for similarity in pairwise_similarities]
+
+        # Select the cluster with the highest average similarity
+        selected_cluster = np.argmax(avg_similarities)
+        #print('selected cluster',selected_cluster)
+        # Access the data points in the selected cluster
+        selected_cluster_points = driverDistance[labels == selected_cluster]
+
+        # Find the medoid that maximize the inter-cluster similarity
+        pairwise_similarity = 1 - pairwise_distances(selected_cluster_points, metric='euclidean')
+        selected_point = np.argmax(np.sum(pairwise_similarity, axis=0))
+        #print('point inside the clustroid: ', selected_point)
+        best_clustroid = mapping_clustroid(labels, selected_cluster, selected_point)
+        best_clustroids.append(best_clustroid)
+        #print('label index of the best point: ',best_clustroid)
+        best_index = driversIndicesBack[driver][best_clustroid]
+        #print('index in the dataframe of the actual route: ', best_index)
+        selected_point = selected_cluster_points[selected_point]
+        #print(selected_point)
+
+        driversClustersPoints[driver] = selected_cluster_points
+        driversLabels[driver] = labels
+        driversClusterLabels[driver] = selected_cluster
+        driversIdealPoint[driver] = selected_point
+        driversIdealIndex[driver] = best_index
 
 if __name__ == "__main__":
     main()
