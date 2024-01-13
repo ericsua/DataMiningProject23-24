@@ -108,6 +108,58 @@ def lsh(minhash_matrix, thresh_user=0.2):
     
     return np.array(candidate_pairs)
 
+
+def lsh_full(minhash_matrix, thresh_user=0.2):
+    # Initialize the signature matrix
+    columns = minhash_matrix.shape[1]
+    
+    # Generate the hash functions
+   # hash_functions = [lambda x, a=a, b=b: (a * x + b) % minhash_matrix.shape[1] for a, b in zip(random.sample(range(1000), bands), random.sample(range(1000), bands))]
+    hash_function = lambda x: hash(",".join([str(x[i]) for i in range(len(x))]))
+    
+    # b = bands
+    # r = columns//bands
+    b, r = find_band_and_row_values(columns, thresh_user)
+    # If columns is not divisible by bands
+    if columns % b != 0:
+        # Find the closest number that makes it divisible
+        while columns % b != 0:
+            b -= 1
+        r = columns // b
+        
+    print("Bands used in LSH:", b)
+    signature_matrix = np.full((minhash_matrix.shape[0], b), np.inf)
+    
+    # if threshold is 0.8,
+    threshold = (1 / b) ** (1 / r) 
+    print("Closest LSH threshold:", threshold)
+    
+    # For each band
+    print("Computing hash values of bands...")
+    hash_values = np.apply_along_axis(lambda x: hash_function(x) % minhash_matrix.shape[0], 1, minhash_matrix.reshape(-1, r))
+    # Reshape the hash values to match the signature matrix
+    hash_values = hash_values.reshape(minhash_matrix.shape[0], b)
+    # Update the signature matrix
+    signature_matrix = hash_values
+            
+    # find candidate pairs
+    print("Finding candidate pairs...")
+    rows = []
+    cols = []
+    data = []
+    
+    for i in tqdm(range(signature_matrix.shape[0])):
+        # Compute the similarity of the current row with all following rows
+        similarities = np.sum(signature_matrix[i+1:, :] == signature_matrix[i, :], axis=1) / b
+        # Find the indices of the rows that have a similarity greater than or equal to the zero
+        indices = np.nonzero(similarities > 0)[0]
+        # Add the pairs to the candidate pairs
+        rows.extend([i]*(len(indices)))
+        cols.extend(indices+i+1)
+        data.extend(similarities[indices])
+    
+    return coo_matrix((data, (rows, cols)), shape=(minhash_matrix.shape[0], minhash_matrix.shape[0])).toarray()
+
 def lsh_two_matrices(minhash_matrix1, minhash_matrix2, thresh_user=0.2):
     # Initialize the signature matrix
     columns = minhash_matrix1.shape[1]
@@ -329,6 +381,13 @@ def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=
     subset_sim_matrix = csr_matrix(subset_sim_matrix)
     
     return subset_sim_matrix, map_indices, map_indices_back
+
+
+def jaccard_similarity_minhash_lsh_route_merch_standard(matrix, matrixMerch, thresh_user=0.2, metric="jaccard", alpha=0.8, fusion="mean"):
+    sim_matrix = lsh_full(matrix, thresh_user=thresh_user)
+    with ProgressBar(total=sim_matrix.shape[0]) as progress:
+        sim_matrix = compute_subset_similarity_matrix_and_merch(sim_matrix, matrixMerch, progress, metric=metric, alpha=alpha, fusion=fusion)
+    return sim_matrix
 
 
 def create_binary_matrices(routeSet1, routeSet2):
