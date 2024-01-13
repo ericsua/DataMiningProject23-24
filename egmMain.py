@@ -85,6 +85,16 @@ time_start = time.time()
 
 assert STANDARD_FILE_NAME.startswith('standard') and ACTUAL_FILE_NAME.startswith('actual'), "The files must start with 'standard' and 'actual'"
 
+print("\nParamters used:")
+print("STANDARD_FILE: ", STANDARD_FILE)
+print("ACTUAL_FILE: ", ACTUAL_FILE)
+print("K_SHINGLES: ", K_SHINGLES)
+print("PLOT: ", PLOT)
+print("NUM_PLOTS: ", NUM_PLOTS)
+print("METRIC: ", METRIC)
+print("FUSION: ", FUSION)
+print("ALPHA: ", ALPHA)
+
 # load standard and actual data
 print("\nReading standard data...")
 with open(os.path.join(STANDARD_FILE), encoding="utf-8") as f:
@@ -219,10 +229,12 @@ assert len(standardSets[0][2]) == len(uniqueItems), "The length of the merchandi
 # binary matrix where each row represents a route
 print("Creating route binary matrix...")
 route_matrix, route_matrix_standard = create_binary_matrices(actualSets, standardSets)
+print("Route matrix shape: ", route_matrix.shape)
 
 print("Minhashing route and standard matrix...")    
 num_hash_functions = find_num_hashes_minhash(route_matrix)
 route_matrix, route_matrix_standard = minhash_matrices(route_matrix, route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+print("Route minhashed matrix shape: ", route_matrix.shape)
 
 print("Creating merchandise binary matrix...")
 merch_matrix = np.array([s[2] for s in actualSets])
@@ -231,7 +243,7 @@ merch_matrix = np.array([s[2] for s in actualSets])
 print("Computing Jaccard similarity route matrix...")
 threshold_lsh = find_threshold_lsh(route_matrix, route_matrix)
 actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
-
+print("Distance matrix shape: ", actualSetsDistances.shape)
 
 
 ####### ESSENTIALS FOR TASK 2 ########
@@ -403,7 +415,8 @@ if PLOT:
         color_map = dict(zip(range(max_len), colors)) 
         
     marker_colors = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN]
-    marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN[medoidsIndices]]
+    if len(medoidSets) > 0:
+        marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN[medoidsIndices]]
 
 
     # Create a trace for each type (centroids data)
@@ -485,7 +498,7 @@ if PLOT:
 
 
     colors_true = plt.cm.jet(np.linspace(0, 1, len(standardSets)))
-    color_map_true = dict(zip(range(max_len), colors))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
+    color_map_true = dict(zip(range(len(standardSets)), colors_true))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
     marker_colors_true = [color_map_true[label] for label in actualRefStandardIds]
 
 
