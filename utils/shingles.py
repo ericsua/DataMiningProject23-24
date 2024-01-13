@@ -15,11 +15,10 @@ def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
         idS = s['id']
         route = s['route']
         shingle = [index]
-        citiesInRoute = [] # napoli roma milano teramo bergamo [10,4,5,48,12] [10,4,5] [4,5,48] [5,48,12]
+        citiesInRoute = []
         merchandiseInRoute = np.zeros(len(uniqueItems))
         for trip in route:
             citiesInRoute.append(uniqueCities.index(trip['from']))
-            #merchandiseInRoute += np.array(list(trip['merchandise'].values()))
             for item, n in trip['merchandise'].items():
                 merchandiseInRoute[uniqueItems.index(item)] += n
         if len(route) > 0:
@@ -29,10 +28,6 @@ def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
         
         hashedShingles = []
         for i in range(len(citiesInRoute)-k+1):
-            # Q: is it correct to set the modulo for the hash function to the number of permutations?
-            # A: yes, because we want to have a unique hash for each shingle
-            # Q: would it be better to use a different hash function?
-            # A: yes, because the modulo function is not a good hash function
             hashedShingles.append(hashShingles(citiesInRoute[i:i+k], permutations) )
         
         shingle.append(np.array(hashedShingles))
@@ -74,7 +69,7 @@ def hash_shingles(shingles):
         string += str(shingle) + ","
     return hash(string)
 
-def create_shingles_selfcontained(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity, permutations):
+def create_shingles_selfcontained(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity):
     import numpy as np
     def hash_shingles(shingles):
         # hash shingles
