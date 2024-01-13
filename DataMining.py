@@ -62,7 +62,10 @@ ACTUAL_FILE = 'actual_medium_last.json'
 
 K_SHINGLES = 3
 
-ALPHA = 0.5         # weight of route vector wrt merchandise vector, between 0 and 1
+PLOT = True
+NUM_PLOTS = 4
+
+ALPHA = 0.5 # weight of route vector wrt merchandise vector, between 0 and 1
 METRIC = "jaccard"  # "cosine" or "jaccard" or "L2", metric used for merchandise vectors
 FUSION = "mean"     # "mean" or "product" or "weigthed product", how to fuse the route and merchandise vectors 
                     # (e.g. mean: (ALPHA) * route + (1-ALPHA) * merchandise, product: route * merchandise, weighted product: route * (merchandise + 1))
@@ -74,11 +77,11 @@ FUSION = "mean"     # "mean" or "product" or "weigthed product", how to fuse the
 
 # load standard and actual data
 print("\nReading standard data...")
-with open(os.path.join(HOME,'data',STANDARD_FILE)) as f:
+with open(os.path.join(HOME,'data',STANDARD_FILE), encoding="utf-8") as f:
     standard = json.load(f)
 
 print("\nReading actual data...")
-with open(os.path.join(HOME, 'data', ACTUAL_FILE)) as f:
+with open(os.path.join(HOME, 'data', ACTUAL_FILE), encoding="utf-8") as f:
     actual = json.load(f)
 
 # load the data into a dataframe
@@ -120,6 +123,7 @@ for index, s in dfStandard.iterrows():
 print("\nFinished preparing standard data")
 
 actualRefStandardIds = []
+dictShingles = {}
 for index, s in dfActual.iterrows():
     #print(s)
     idS = s['id']
@@ -127,19 +131,30 @@ for index, s in dfActual.iterrows():
     idStandard = s['sroute']
     actualRefStandardIds.append(int(idStandard[1]))
     drivers.append(s['driver'])
+    current_cities = []
     for trip in route:
         cities.append(trip['from'])
+        current_cities.append(trip['from'])
         items.extend(trip['merchandise'].keys())
         maxItemQuantity = max(maxItemQuantity, max(trip['merchandise'].values()))
         
     if len(route) > 0:
         cities.append(route[-1]['to'])
+        current_cities.append(route[-1]['to'])
         
     if len(route) > longestRoute:
         longestRoute = len(route)
     
     if len(route) < shortestRoute:
         shortestRoute = len(route)
+    
+    if K_SHINGLES >= 3 and shortestRoute >= K_SHINGLES - 1:
+        #print("route", current_cities)
+        for i in range(len(current_cities)-K_SHINGLES+1):
+            shingle = hash_shingles(current_cities[i:i+K_SHINGLES])
+            if shingle not in dictShingles:
+                dictShingles[shingle] = 1
+        
 print("\nFinished preparing actual data")
 
 
@@ -151,7 +166,8 @@ uniqueDrivers = sorted(list(set(drivers)))
 
 print("\nSorted cities and items")
 
-if shortestRoute < 2:
+print("SIZE MATRIX SHINGLES", len(dictShingles), len(dfActual), len(dictShingles) * len(dfActual))
+if shortestRoute < 2 or len(dictShingles) * len(dfActual) > 100_000_000:
     K_SHINGLES = 2
 
 threeShingles = []
@@ -371,6 +387,7 @@ else:
     #simMatrixMixed = jaccard_similarity_two_matrices(route_matrix_medoids, route_matrix_standard)
     simMatrixMixed = route_similarity_standard_to_actual[medoidsIndices]
     print("simMatrixMixed: ", type(simMatrixMixed), simMatrixMixed.shape, simMatrixMixed[0])
+    print("simmatrix 2", simMatrixMixed)
     #print("route_matrix_standard: ", route_matrix_standard.shape)
 
     #print("route_matrix_actual: ", route_matrix_medoids.shape)
@@ -395,6 +412,7 @@ else:
     print("argmax: ", argmax.shape, type(argmax), argmax)
     print("maxval: ", maxValues.shape, type(maxValues), maxValues)
     
+    print("set argmax", set(argmax), medoidsIndices)
 
     if len(set(argmax)) == len(medoidsIndices): # if the argmax are all different, then the medoids can be reordered
         print("argmax is correct, can be reordered")
@@ -476,11 +494,15 @@ else:
         distStdCluster = 1 - distSimCluster.toarray()
         distStdCluster = distStdCluster[distStdCluster != 1]
         print("distSimCluster: ", np.mean(distStdCluster), len(distStdCluster), distStdCluster)
-        meanDist = np.mean(distStdCluster)
-        if np.isnan(meanDist):
+        if distStdCluster.shape[0] == 0:
             distancesStandardVectors.append(1)
         else:
             distancesStandardVectors.append(np.mean(distStdCluster))
+        # meanDist = np.mean(distStdCluster)
+        # if np.isnan(meanDist):
+        #     distancesStandardVectors.append(1)
+        # else:
+        #     distancesStandardVectors.append(np.mean(distStdCluster))
     
     
     mean_similarity_clustroids = np.mean(cluster_mean_distances)
@@ -547,139 +569,140 @@ else:
 
 ######### PLOT CLUSTERS FOUND #########
 
-max_len = max(len(standardSets), len(num_clusters_unique))
-colors = plt.cm.jet(np.linspace(0, 1, max_len))
-# print("colors", colors.shape, colors)
+if PLOT:
+    max_len = max(len(standardSets), len(num_clusters_unique))
+    colors = plt.cm.jet(np.linspace(0, 1, max_len))
+    # print("colors", colors.shape, colors)
 
-# print("medoid labels", [labels_HDBSCAN[i] for i in medoidsIndices])
-# print("argmax", argmax)
+    # print("medoid labels", [labels_HDBSCAN[i] for i in medoidsIndices])
+    # print("argmax", argmax)
 
-if len(medoidSets) > 0 and CAN_BE_ORDERED:
-    print("medoids added to plots and reordered")
-    color_map = dict(zip(range(max_len), colors[unique_labels_reordered]))
-    #rint("color_map", color_map)
-else:
-    color_map = dict(zip(range(max_len), colors))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
-    
-marker_colors = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN]
-marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN[medoidsIndices]]
-#marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in unique_labels]
+    if len(medoidSets) > 0 and CAN_BE_ORDERED:
+        print("medoids added to plots and reordered")
+        color_map = dict(zip(range(max_len), colors[unique_labels_reordered]))
+        #rint("color_map", color_map)
+    else:
+        color_map = dict(zip(range(max_len), colors))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
+        
+    marker_colors = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN]
+    marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in labels_HDBSCAN[medoidsIndices]]
+    #marker_colors_medoids = [color_map[label] if label > -1 else np.array([0,0,0,1]) for label in unique_labels]
 
 
-# Create a trace for each type (centroids data)
-traceStandard = go.Scatter3d(
-    x=completeSetTSNE[len(actualSets):,0],
-    y=completeSetTSNE[len(actualSets):,1],
-    z=completeSetTSNE[len(actualSets):,2],
-    mode='markers',
-    marker=dict(
-        size=7,
-        color=colors,                # set color to an array/list of desired values
-        opacity=1,
-        symbol='diamond'
-    )
-)
-
-if len(medoidSets) > 0:
-    medoidsElements = completeSetTSNE[medoidsIndices] # medoidsIndices = [921, 123]
-    traceMedoids = go.Scatter3d(
-        x=medoidsElements[:,0],
-        y=medoidsElements[:,1],
-        z=medoidsElements[:,2],
+    # Create a trace for each type (centroids data)
+    traceStandard = go.Scatter3d(
+        x=completeSetTSNE[len(actualSets):,0],
+        y=completeSetTSNE[len(actualSets):,1],
+        z=completeSetTSNE[len(actualSets):,2],
         mode='markers',
         marker=dict(
             size=7,
-            color=marker_colors_medoids,                # set color to an array/list of desired values
+            color=colors,                # set color to an array/list of desired values
             opacity=1,
-            symbol='cross'
+            symbol='diamond'
         )
     )
 
-# Create a trace for each type (centroids data)
-traceActual = go.Scatter3d(
-    x=completeSetTSNE[:len(actualSets),0],
-    y=completeSetTSNE[:len(actualSets),1],
-    z=completeSetTSNE[:len(actualSets),2],
-    mode='markers',
-    marker=dict(
-        size=7,
-        color=marker_colors,                # set color to an array/list of desired values
-        opacity=0.1,
-        symbol='circle'
+    if len(medoidSets) > 0:
+        medoidsElements = completeSetTSNE[[map_indices_back[i] for i in medoidsIndices]] # medoidsIndices = [921, 123]
+        traceMedoids = go.Scatter3d(
+            x=medoidsElements[:,0],
+            y=medoidsElements[:,1],
+            z=medoidsElements[:,2],
+            mode='markers',
+            marker=dict(
+                size=10,
+                color=marker_colors_medoids,                # set color to an array/list of desired values
+                opacity=1,
+                symbol='cross'
+            )
+        )
+
+    # Create a trace for each type (centroids data)
+    traceActual = go.Scatter3d(
+        x=completeSetTSNE[:len(actualSets),0],
+        y=completeSetTSNE[:len(actualSets),1],
+        z=completeSetTSNE[:len(actualSets),2],
+        mode='markers',
+        marker=dict(
+            size=7,
+            color=marker_colors,                # set color to an array/list of desired values
+            opacity=0.1,
+            symbol='circle'
+        )
     )
-)
 
-# Plot
-if len(medoidSets) > 0:
-    data = [traceStandard, traceActual, traceMedoids]
-else:
-    data = [traceStandard, traceActual]
+    # Plot
+    if len(medoidSets) > 0:
+        data = [traceStandard, traceActual, traceMedoids]
+    else:
+        data = [traceStandard, traceActual]
 
-layout = go.Layout(
-    margin=dict(
-        l=0,
-        r=0,
-        b=0,
-        t=0
+    layout = go.Layout(
+        margin=dict(
+            l=0,
+            r=0,
+            b=0,
+            t=0
+        )
     )
-)
 
-fig = go.Figure(data=data, layout=layout)
-fig.show()
-
+    fig = go.Figure(data=data, layout=layout)
+    fig.show()
 
 
-######## PLOT GROUND TRUTH ########
+
+    ######## PLOT GROUND TRUTH ########
 
 
-colors_true = plt.cm.jet(np.linspace(0, 1, len(standardSets)))
-color_map_true = dict(zip(range(max_len), colors))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
-# marker colors for each point with the same color as the cluster it belongs to in the original data
-marker_colors_true = [color_map_true[label] for label in actualRefStandardIds]
+    colors_true = plt.cm.jet(np.linspace(0, 1, len(standardSets)))
+    color_map_true = dict(zip(range(max_len), colors))   # 0=red, 1=blue, 2=green, 3=yellow, 4=purple, 5=lightblue, 6=lightgreen, 7=lightyellow, 8=lightpurple
+    # marker colors for each point with the same color as the cluster it belongs to in the original data
+    marker_colors_true = [color_map_true[label] for label in actualRefStandardIds]
 
 
-# Create a trace for each type (centroids data)
-traceStandard_true = go.Scatter3d(
-    x=completeSetTSNE[len(actualSets):,0],
-    y=completeSetTSNE[len(actualSets):,1],
-    z=completeSetTSNE[len(actualSets):,2],
-    mode='markers',
-    marker=dict(
-        size=7,
-        color=colors_true,                # set color to an array/list of desired values
-        opacity=1,
-        symbol='diamond'
+    # Create a trace for each type (centroids data)
+    traceStandard_true = go.Scatter3d(
+        x=completeSetTSNE[len(actualSets):,0],
+        y=completeSetTSNE[len(actualSets):,1],
+        z=completeSetTSNE[len(actualSets):,2],
+        mode='markers',
+        marker=dict(
+            size=7,
+            color=colors_true,                # set color to an array/list of desired values
+            opacity=1,
+            symbol='diamond'
+        )
     )
-)
 
-# Create a trace for each type (centroids data)
-traceActual_true = go.Scatter3d(
-    x=completeSetTSNE[:len(actualSets),0],
-    y=completeSetTSNE[:len(actualSets),1],
-    z=completeSetTSNE[:len(actualSets),2],
-    mode='markers',
-    marker=dict(
-        size=7,
-        color=marker_colors_true,                # set color to an array/list of desired values
-        opacity=0.1,
-        symbol='circle'
+    # Create a trace for each type (centroids data)
+    traceActual_true = go.Scatter3d(
+        x=completeSetTSNE[:len(actualSets),0],
+        y=completeSetTSNE[:len(actualSets),1],
+        z=completeSetTSNE[:len(actualSets),2],
+        mode='markers',
+        marker=dict(
+            size=7,
+            color=marker_colors_true,                # set color to an array/list of desired values
+            opacity=0.1,
+            symbol='circle'
+        )
     )
-)
 
-# Plot
-data = [traceStandard_true, traceActual_true]
+    # Plot
+    data = [traceStandard_true, traceActual_true]
 
-layout = go.Layout(
-    margin=dict(
-        l=0,
-        r=0,
-        b=0,
-        t=0
+    layout = go.Layout(
+        margin=dict(
+            l=0,
+            r=0,
+            b=0,
+            t=0
+        )
     )
-)
 
-fig = go.Figure(data=data, layout=layout)
-fig.show()
+    fig = go.Figure(data=data, layout=layout)
+    fig.show()
 
 
 ##### OUTPUT RECOMMENDED STANDARD ROUTES #####
@@ -765,7 +788,7 @@ for driver in uniqueDrivers:
     # means = [np.mean(driver_max_value[driver_standard_index == idx]) for idx in unique_values_index if idx != np.nan]
     # print("means", means)
 
-    weighted_sums = [np.sum(driver_max_value[driver_standard_index == idx]) * np.count_nonzero(driver_standard_index == idx) for idx in unique_values_index if not np.isnan(idx)]
+    weighted_sums = [ (1 - np.mean(driver_max_value[driver_standard_index == idx])) * np.count_nonzero(driver_standard_index == idx) for idx in unique_values_index if not np.isnan(idx)]
     # print("weighted_sums", weighted_sums)
 
     best_route_Ids = []
@@ -847,9 +870,6 @@ for driver in uniqueDrivers:
     driversIndicesMapped[driver] = driver_indices_mapped
     driversIndicesBack[driver] = driver_indices_mapped_back
     
-    
-
-from sklearn.metrics import pairwise_distances
 
 def mapping_clustroid(labels: list, cluster_idx, point_idx):
     counter = 0
@@ -863,8 +883,8 @@ def inter_cluster_distance(sparse_distances):
     mean_distances = []
     for point in sparse_distances:
         mean_distances.append(np.mean(point))
-
-    return np.mean(mean_distances)
+    
+    return  (1 - np.mean(mean_distances)) * sparse_distances.shape[0]
 
 def intra_cluster_distance(sparse_distances):
     mean_distances = []
@@ -910,6 +930,7 @@ for driver, driverIndices in driversIndicesMapped.items():
     #print('selected cluster',selected_cluster)
     # Access the data points in the selected cluster
     selected_cluster_points = driverDistance[labels == selected_cluster]
+    print('selected cluster points',selected_cluster_points.shape)
     selected_cluster_distance = intra_cluster_distance(selected_cluster_points)
     # Find the medoid that maximize the inter-cluster similarity
     selected_point = np.argmin(selected_cluster_distance)
@@ -938,53 +959,60 @@ with open(file_path, 'w', encoding="utf-8") as json_file:
     json.dump(data, json_file, indent=2, ensure_ascii=False)
     
     
-columns = 2
-rows = len(uniqueDrivers) // columns
-fig, axs = plt.subplots(rows, columns, figsize = (columns*3, rows*3))
+if PLOT:
+    columns = 2
+    #rows = len(uniqueDrivers) // columns
+    rows = NUM_PLOTS // columns
+    fig, axs = plt.subplots(rows, columns, figsize = (columns*3, rows*3))
 
-axs = axs.flatten()
+    axs = axs.flatten()
 
-for i, driver in enumerate(uniqueDrivers):
-    idx = best_clustroids[i]
+    for i, driver in enumerate(uniqueDrivers):
+        if i == NUM_PLOTS:
+            break
+        idx = best_clustroids[i]
 
-    fit = umap.UMAP(n_neighbors=15,min_dist=0.1,n_components=2,metric='cosine')
-    driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
-    driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
-    u = fit.fit_transform(driverDistance)
+        fit = umap.UMAP(n_neighbors=15,min_dist=0.1,n_components=2,metric='cosine')
+        driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
+        driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
+        u = fit.fit_transform(driverDistance)
 
-    axs[i].scatter(u[:,0], u[:,1], s = 50, c=driversLabels[driver])
+        axs[i].scatter(u[:,0], u[:,1], s = 50, c=driversLabels[driver])
 
-    axs[i].plot(u[idx, 0], u[idx, 1], marker='*', markersize=5, color='black')
+        axs[i].plot(u[idx, 0], u[idx, 1], marker='*', markersize=5, color='black')
 
-    axs[i].axhline(y=u[idx, 1], color='gray', linestyle='--')
-    axs[i].axvline(x=u[idx, 0], color='gray', linestyle='--')
+        axs[i].axhline(y=u[idx, 1], color='gray', linestyle='--')
+        axs[i].axvline(x=u[idx, 0], color='gray', linestyle='--')
 
-    axs[i].set_title(f"driver {driver}", fontsize=12)
-    #axs[i].legend()
+        axs[i].set_title(f"driver {driver}", fontsize=12)
+        #axs[i].legend()
 
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.show()
 
 
 
-columns = 2
-rows = len(uniqueDrivers) // columns
-fig = plt.figure(figsize=(columns * 3, rows * 3))
+    columns = 2
+    #rows = len(uniqueDrivers) // columns
+    rows = NUM_PLOTS // columns
+    fig = plt.figure(figsize=(columns * 3, rows * 3))
 
-for i, driver in enumerate(uniqueDrivers):
-    idx = best_clustroids[i]
+    for i, driver in enumerate(uniqueDrivers):
+        if i == NUM_PLOTS:
+            break
+        idx = best_clustroids[i]
 
-    fit = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=3, metric='euclidean')
-    driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
-    driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
-    u = fit.fit_transform(driverDistance)
+        fit = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=3, metric='euclidean')
+        driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
+        driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
+        u = fit.fit_transform(driverDistance)
 
-    ax = fig.add_subplot(rows, columns, i + 1, projection='3d')
-    ax.scatter(u[:, 0], u[:, 1], u[:, 2], s=50, c=driversLabels[driver])
+        ax = fig.add_subplot(rows, columns, i + 1, projection='3d')
+        ax.scatter(u[:, 0], u[:, 1], u[:, 2], s=50, c=driversLabels[driver])
 
-    ax.plot(u[idx, 0], u[idx, 1], u[idx, 2], marker='*', markersize=12, color='black')
+        ax.plot(u[idx, 0], u[idx, 1], u[idx, 2], marker='*', markersize=12, color='black')
 
-    ax.set_title(f"driver {driver}", fontsize=12)
+        ax.set_title(f"driver {driver}", fontsize=12)
 
-plt.tight_layout()
-plt.show()
+    plt.tight_layout()
+    plt.show()

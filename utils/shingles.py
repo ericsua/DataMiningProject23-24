@@ -67,6 +67,13 @@ def create_shingles(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
     
     return shingle
 
+def hash_shingles(shingles):
+    # hash shingles
+    string = ""
+    for shingle in shingles:
+        string += str(shingle) + ","
+    return hash(string)
+
 def create_shingles_selfcontained(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity, permutations):
     import numpy as np
     def hash_shingles(shingles):
