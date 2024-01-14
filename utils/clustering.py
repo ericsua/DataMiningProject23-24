@@ -10,6 +10,8 @@ import random
 from tqdm import tqdm
 
 from scipy.sparse import csr_matrix, coo_matrix
+from sklearn.metrics.pairwise import cosine_similarity
+
 
 warnings.simplefilter('ignore', category=NumbaWarning)
 
@@ -195,7 +197,7 @@ def compute_distance_pairs_merch(sim_matrix, matrix1, matrix1Merch, matrix2, mat
         if metric == "cosine":
             # COSINE
             normsSubset2Merch = np.sqrt(np.sum(np.power(subset2Merch, squareMatrix), axis=1))
-            merch_distance = 1 - (((subset1Merch * subset2Merch).sum(axis=1) / (np.sqrt(np.sum(np.power(subset1Merch, squareMatrix),axis=1)) * normsSubset2Merch)) + 1) / 2
+            merch_distance = (((subset1Merch * subset2Merch).sum(axis=1) / (np.sqrt(np.sum(np.power(subset1Merch, squareMatrix),axis=1)) * normsSubset2Merch)) + 1) / 2
         elif metric == "jaccard":
             # JACCARD
             min_matrixMerch = np.minimum(subset1Merch, subset2Merch)
@@ -208,7 +210,7 @@ def compute_distance_pairs_merch(sim_matrix, matrix1, matrix1Merch, matrix2, mat
             #print("merch_distance", merch_distance.shape)
         else:
             # L2
-            merch_distance = np.sqrt(np.sum(np.square(subset1Merch - subset2Merch), axis=-1))
+            merch_distance = 1 / (1 + np.sqrt(np.sum(np.square(subset1Merch - subset2Merch), axis=-1)))
 
 
         if fusion == "mean":
@@ -233,7 +235,7 @@ def similarity_minhash_lsh_two_matrices_and_merch(matrix1, matrix1Merch, matrix2
     similarity_matrix = lsh_two_matrices(matrix1,matrix2, thresh_user=thresh_user)
     print("Computing distance  on subset matrix...")
     with ProgressBar(total=matrix1.shape[0]) as progress:
-        similarity_matrix = compute_distance_pairs_merch(similarity_matrix, matrix1, matrix1Merch, matrix2, matrix2Merch, progress, metric="jaccard", alpha=0.8, fusion="mean")
+        similarity_matrix = compute_distance_pairs_merch(similarity_matrix, matrix1, matrix1Merch, matrix2, matrix2Merch, progress, metric=metric, alpha=alpha, fusion=fusion)
         
     return similarity_matrix
         
@@ -326,9 +328,169 @@ def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=
     map_indices_back = {v: k for k, v in map_indices.items()}
     
     print("Creating sparse similarity matrix...")
-    subset_sim_matrix = csr_matrix(subset_sim_matrix)
+    subset_sim_matrix = csr_matrix(subset_sim_matrix, dtype=np.float32)
     
     return subset_sim_matrix, map_indices, map_indices_back
+
+def similarity_two_matrices_and_merch(matrix1,matrix1Merch, matrix2, matrix2Merch, alpha=0.8, fusion="mean"):
+    if 1.0 - np.count_nonzero(matrix1) / matrix1.size > 0.5 and 1.0 - np.count_nonzero(matrix2) / matrix2.size > 0.5:
+        print("matrix jaccard is sparse")
+        
+        matrixCSR = csr_matrix(matrix1)
+        matrix2CSR = csr_matrix(matrix2)
+        
+        intersection = np.dot(matrixCSR, matrix2CSR.T)
+        #intersection = intersection.todense()
+        row_sums = matrix1.sum(axis=1)
+        row_sums2 = matrix2.sum(axis=1)
+        union = row_sums[:, None] + row_sums2 - intersection
+        union = np.where(union == 0, 1, union)
+        routeSim = (intersection / union).toarray()
+    else:
+        intersection = np.dot(matrix1, matrix2.T)
+        row_sums = matrix1.sum(axis=1)
+        row_sums2 = matrix2.sum(axis=1)
+        union = row_sums[:, None] + row_sums2 - intersection
+        union = np.where(union == 0, 1, union)
+        routeSim = intersection / union
+    
+
+    merchSim = cosine_similarity(matrix1Merch, matrix2Merch) #((1 + np.sum(matrix1Merch * matrix2Merch2, axis=-1) / np.linalg.norm(matrix1Merch, axis=-1) / np.linalg.norm(matrix2Merch2, axis=-1)) / 2)
+        
+        
+    if fusion == "mean":
+        # MEAN
+        return (alpha) * routeSim + (1-alpha) * merchSim
+    elif fusion == "product":
+        # PRODUCT
+        return routeSim * merchSim
+    else:
+        # WEIGHTED PRODUCT
+        return np.power(routeSim, alpha) * np.power(merchSim, 1-alpha)
+
+def similarity_minhash_two_matrices_and_merch(matrix1, matrix1Merch, matrix2, matrix2Merch, metric="jaccard", alpha=0.8, fusion="mean"):
+    print("Computing jaccard similarity on full matrices...")
+    matrixRoute1 = matrix1[:, None, :]
+    matrixRoute2 = matrix2[None, :, :]
+    
+    min_matrix = np.minimum(matrixRoute1, matrixRoute2)
+    sum_min_matrix = np.sum(min_matrix, axis=-1)
+    
+    max_matrix = np.maximum(matrixRoute1, matrixRoute2)
+    sum_max_matrix = np.sum(max_matrix, axis=-1)
+    
+    routeSim =  (sum_min_matrix / sum_max_matrix)
+    
+    matrixMerch1 = matrix1Merch[:, None, :]
+    matrixMerch2 = matrix2Merch[None, :, :]
+    
+    if metric == "cosine":
+        # COSINE
+        merchSim = ((1 + np.sum(matrixMerch1 * matrixMerch2, axis=-1) / np.linalg.norm(matrixMerch1, axis=-1) / np.linalg.norm(matrixMerch2, axis=-1)) / 2)
+    elif metric == "jaccard":
+        # JACCARD
+        min_matrixMerch = np.minimum(matrixMerch1, matrixMerch2)
+        sum_min_matrixMerch = np.sum(min_matrixMerch, axis=-1)
+        
+        max_matrixMerch = np.maximum(matrixMerch1, matrixMerch2)
+        sum_max_matrixMerch = np.sum(max_matrixMerch, axis=-1)
+        
+        merchSim = (sum_min_matrixMerch / sum_max_matrixMerch)
+    else:
+        # L2
+        merchSim = 1 / (1 + np.linalg.norm(matrixMerch1 - matrixMerch2, axis=-1))
+        
+        
+    if fusion == "mean":
+        # MEAN
+        return (alpha) * routeSim + (1-alpha) * merchSim
+    elif fusion == "product":
+        # PRODUCT
+        return routeSim * merchSim
+    else:
+        # WEIGHTED PRODUCT
+        return np.power(routeSim, alpha) * np.power(merchSim, 1-alpha)
+
+def jaccard_distance_route_merch(matrix, matrixMerch, alpha=0.8, fusion="mean"):
+    if 1.0 - np.count_nonzero(matrix) / matrix.size > 0.5:
+        print("matrix jaccard is sparse")
+        matrixCSR = csr_matrix(matrix)
+        
+        intersection = np.dot(matrixCSR, matrixCSR.T)
+        #intersection = intersection.todense()
+        row_sums = matrix.sum(axis=1)
+        union = row_sums[:, None] + row_sums - intersection
+        union = np.where(union == 0, 1, union)  # avoid division by zero
+        routeDist = 1 - (intersection / union).toarray()
+    else:
+        intersection = np.dot(matrix, matrix.T)
+        row_sums = matrix.sum(axis=1)
+        union = row_sums[:, None] + row_sums - intersection
+        union = np.where(union == 0, 1, union)
+        routeDist = 1 - (intersection / union)
+    
+    
+    merchDist = 1 - cosine_similarity(matrixMerch) #((1 + np.sum(matrixMerch * matrixMerch, axis=-1) / np.linalg.norm(matrixMerch, axis=-1) / np.linalg.norm(matrixMerch, axis=-1)) / 2)
+        
+        
+    if fusion == "mean":
+        # MEAN
+        return (alpha) * routeDist + (1-alpha) * merchDist
+    elif fusion == "product":
+        # PRODUCT
+        return routeDist * merchDist
+    else:
+        # WEIGHTED PRODUCT
+        return np.power(routeDist, alpha) * np.power(merchDist, 1-alpha)
+
+def jaccard_distance_minhash_route_merch(matrix, matrixMerch, metric="jaccard", alpha=0.8, fusion="mean"):
+    print("Computing jaccard distance on full matrix...")
+
+    n = matrix.shape[0]
+    n1 = matrix.shape[1]
+    m = matrixMerch.shape[1]
+    
+    # compute jaccard similarity route
+    
+    matrixRoute1 = matrix[:, None, :]
+    matrixRoute2 = matrix[None, :, :]
+    min_matrix = np.minimum(matrixRoute1, matrixRoute2)
+    sum_min_matrix = np.sum(min_matrix, axis=-1)
+    
+    max_matrix = np.maximum(matrixRoute1, matrixRoute2)
+    sum_max_matrix = np.sum(max_matrix, axis=-1)
+    
+    routeDistance = 1 - (sum_min_matrix / sum_max_matrix)
+    
+    matrixMerch1 = matrixMerch[:, None, :]
+    matrixMerch2 = matrixMerch[None, :, :]
+    # compute jaccard similarity merch
+    if metric == "cosine":
+        # COSINE
+        distMerch = 1 - ((1 + np.sum(matrixMerch1 * matrixMerch2, axis=-1) / np.linalg.norm(matrixMerch1, axis=-1) / np.linalg.norm(matrixMerch2, axis=-1)) / 2)
+    elif metric == "jaccard":
+        # JACCARD
+        min_matrixMerch = np.minimum(matrixMerch1, matrixMerch2)
+        sum_min_matrixMerch = np.sum(min_matrixMerch, axis=-1)
+        
+        max_matrixMerch = np.maximum(matrixMerch1, matrixMerch2)
+        sum_max_matrixMerch = np.sum(max_matrixMerch, axis=-1)
+        
+        distMerch = 1 - (sum_min_matrixMerch / sum_max_matrixMerch)
+    else:
+        # L2
+        distMerch = np.linalg.norm(matrixMerch1 - matrixMerch2, axis=-1)
+        
+        
+    if fusion == "mean":
+        # MEAN
+        return (alpha) * routeDistance + (1-alpha) * distMerch
+    elif fusion == "product":
+        # PRODUCT
+        return routeDistance * distMerch
+    else:
+        # WEIGHTED PRODUCT
+        return np.power(routeDistance, alpha) * np.power(distMerch, 1-alpha)
 
 
 def create_binary_matrices(routeSet1, routeSet2):
