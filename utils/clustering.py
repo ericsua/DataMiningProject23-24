@@ -110,6 +110,115 @@ def lsh(minhash_matrix, thresh_user=0.2):
     
     return np.array(candidate_pairs)
 
+def lsh_no_zeros(minhash_matrix1, thresh_user=0.2):
+    # Initialize the signature matrix
+    columns = minhash_matrix1.shape[1]
+    
+    # Generate the hash function
+    def hash_function(x):
+        var = hash(",".join([str(x[i]) for i in range(len(x))]))
+        return var % minhash_matrix1.shape[0]
+
+
+    # b = bands
+    # r = columns//bands
+    b, r = find_band_and_row_values(columns, thresh_user)
+    # If columns is not divisible by bands
+    if columns % b != 0:
+        # Find the closest number that makes it divisible
+        while columns % b != 0:
+            b -= 1
+        r = columns // b
+        
+    print("Bands used in LSH:", b)
+    signature_matrix1 = np.full((minhash_matrix1.shape[0], b), np.inf)
+    
+
+    threshold = (1 / b) ** (1 / r) 
+    print("Closest LSH threshold:", threshold)
+
+    # For each band
+    print("Computing hash values of bands...")
+    hash_values1 = np.apply_along_axis(hash_function, 1, minhash_matrix1.reshape(-1, r))
+
+
+    # Reshape the hash values to match the signature matrix
+    hash_values1 = hash_values1.reshape(minhash_matrix1.shape[0], b)
+    # Update the signature matrix
+    signature_matrix1 = hash_values1
+    
+    
+    # find candidate pairs
+    print("Finding candidate pairs...")
+
+    # data=[]
+    # rows=[]
+    # cols=[]
+    
+    
+
+    # for i in tqdm(range(signature_matrix1.shape[0])):
+    #     # Compute the similarity of the current row with all following rows
+    #     similarities = np.sum(signature_matrix1[i] == signature_matrix1, axis=1) / b
+    #     distances = 1 - similarities
+    #     # Find the indices of the rows that have a similarity greater than or equal to the threshold
+    #     indices = np.array(list(range(distances.shape[0]))) #np.nonzero(distances > 0)[0]
+
+    #     data.extend(distances)
+    #     rows.extend([i]*len(indices))
+    #     cols.extend(indices)
+
+    # print("Creating sparse LSH matrix...")
+    # distances_matrix = coo_matrix((data, (rows, cols)), shape=(minhash_matrix1.shape[0], minhash_matrix1.shape[0])).tocsr()
+    
+    # from scipy.sparse import dok_matrix
+
+    # # Initialize an empty DOK matrix
+    # distances_matrix = dok_matrix((signature_matrix1.shape[0], signature_matrix1.shape[0]))
+
+    # for i in tqdm(range(signature_matrix1.shape[0])):
+    #     # Compute the similarity of the current row with all following rows
+    #     similarities = np.sum(signature_matrix1[i] == signature_matrix1[i+1:], axis=1) / b
+    #     distances = 1 - similarities
+    #     # Find the indices of the rows that have a similarity greater than or equal to the threshold
+    #     for j in range(i+1, distances.shape[0]):
+    #         distances_matrix[i, j] = distances[j]
+    #         distances_matrix[j, i] = distances[j]
+
+    # print("Creating sparse LSH matrix...")
+    # # Convert the DOK matrix to CSR format for efficient arithmetic and matrix operations
+    # distances_matrix = distances_matrix.tocsr()
+    
+    from scipy.sparse import lil_matrix
+
+    # Initialize an empty LIL matrix
+    distances_matrix = lil_matrix((signature_matrix1.shape[0], signature_matrix1.shape[0]))
+
+    for i in tqdm(range(signature_matrix1.shape[0])):
+        # Compute the similarity of the current row with all following rows
+        distances = 1 - np.sum(signature_matrix1[i] == signature_matrix1, axis=1) / b
+        #distances = 1 - similarities
+        # Find the indices of the rows that have a similarity greater than or equal to the threshold
+        #indices = np.array(list(range(distances.shape[0]))) #np.nonzero(distances > 0)[0]
+
+        # Update the LIL matrix
+        #for j in indices:
+        distances_matrix[i] = distances
+
+    # print("Creating sparse LSH matrix...")
+    # # Convert the LIL matrix to CSR format for efficient arithmetic and matrix operations
+    distances_matrix = distances_matrix.tocsr()
+    
+    # print("distance matrix shape", distances_matrix[0])
+    # print("distance matrix shape", distances_matrix[:, 0])
+    # # get row with min non zero value
+    # print("Getting row with min non zero value...")
+    # min_non_zero = np.argmin(np.count_nonzero(distances_matrix, axis=1))
+    # min_non_zero_value = np.min(np.count_nonzero(distances_matrix, axis=1))
+    # print("Min non zero row:", min_non_zero, "with value:", min_non_zero_value)
+
+    return distances_matrix
+
 def lsh_two_matrices(minhash_matrix1, minhash_matrix2, thresh_user=0.2):
     # Initialize the signature matrix
     columns = minhash_matrix1.shape[1]
@@ -355,6 +464,51 @@ def compute_subset_similarity_matrix_and_merch(matrix, matrixMerch, progress_pro
 #     print("Creating sparse similarity matrix...")
 #     coo = coo_matrix((data, (rows, cols)), shape=(n, n)).tocsr()
 #     return coo
+
+def jaccard_similarity_minhash_lsh_route_merch_no_compute(matrix, matrixMerch, thresh_user=0.2, metric="jaccard", alpha=0.8, fusion="mean"):
+    signature_matrix = lsh_no_zeros(matrix, thresh_user=thresh_user)
+    # uniqueRowsSet = set([i for i, j in pairs] + [j for i, j in pairs]) # (1,2) (1,4) (1,5)
+    # neverSeen = set([i for i in range(matrix.shape[0])]) - uniqueRowsSet
+    # print("Subset of rows to check similarity:", len(uniqueRowsSet))
+    # print(" num of pairs", len(uniqueRowsSet)* (len(uniqueRowsSet)-1)/2)
+    # print(" instead of", matrix.shape[0]*(matrix.shape[0]-1)/2)
+    # print("improved by", (1 - len(uniqueRowsSet)* (len(uniqueRowsSet)-1)/2 / (matrix.shape[0]*(matrix.shape[0]-1)/2)) *100, "%")
+    
+        
+    print("Computing jaccard similarity on subset matrix...")
+    
+    #sortedUniqueRowsSet = sorted(list(uniqueRowsSet))
+    # subset_matrix = matrix[sortedUniqueRowsSet]
+    # subset_matrixMerch = matrixMerch[sortedUniqueRowsSet]
+    # with ProgressBar(total=len(sortedUniqueRowsSet)) as progress:
+    #     subset_sim_matrix = compute_subset_similarity_matrix_and_merch(subset_matrix, subset_matrixMerch, progress, metric=metric, alpha=alpha, fusion=fusion)
+    #     #data, rows, cols = compute_subset_similarity_matrix_and_merch(subset_matrix, subset_matrixMerch, progress, metric=metric, alpha=alpha, fusion=fusion)
+    
+    print("Creating mapping...")
+    
+    # remove never seen rows and map indices
+    map_indices = {}
+    sortedNeverSeen = sorted(list([]))
+    counter = 0
+    for i in range(matrix.shape[0]):
+        if i in sortedNeverSeen:
+            continue
+        map_indices[i] = counter
+        counter += 1
+        
+    map_indices_back = {v: k for k, v in map_indices.items()}
+    
+    distMerch = 1 - (1+cosine_similarity(matrixMerch)) / 2
+    # set lower triangular to 0
+  #  distMerch[np.tril_indices_from(distMerch, k=1)] = 0
+    distMerch = csr_matrix(distMerch)
+    
+    signature_matrix = (signature_matrix + distMerch) / 2
+    
+    # print("Creating sparse similarity matrix...")
+    #subset_sim_matrix = csr_matrix(subset_sim_matrix)
+    #subset_sim_matrix = coo_matrix((data, (rows, cols)), shape=(len(sortedUniqueRowsSet), len(sortedUniqueRowsSet))).tocsr()
+    return signature_matrix, map_indices, map_indices_back
 
 
 def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=0.2, metric="jaccard", alpha=0.8, fusion="mean"):
@@ -603,8 +757,10 @@ def find_num_hashes_minhash(matrix):
 
 def find_threshold_lsh(matrix1, matrix2):
     tot = matrix1.shape[0]*matrix2.shape[0]
-    if tot < 100_000_000:
+    if tot <= 100_000_000:
         threshold = 0.0
+    elif tot < 500_000_000:
+        threshold = 0.2
     elif tot < 1_000_000_000:
         threshold = 0.4
     elif tot < 10_000_000_000:

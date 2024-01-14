@@ -243,8 +243,9 @@ merch_matrix = np.array([s[2] for s in actualSets])
 print("Computing Jaccard similarity route matrix...")
 threshold_lsh = find_threshold_lsh(route_matrix, route_matrix)
 print("LSH threshold estimated:", threshold_lsh)
-actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
-print("Distance matrix shape: ", actualSetsDistances.shape)
+#actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch_no_compute(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+print("Distance matrix shape: ", actualSetsDistances.shape, type(actualSetsDistances))
 
 
 ####### ESSENTIALS FOR TASK 2 ########
@@ -266,6 +267,7 @@ forward_expansion = len(actualSets) // len(standardSets)
 
 
 print("Computing HDBSCAN...")
+#print("actual first row: ", actualSetsDistances.shape, type(actualSetsDistances), actualSetsDistances[0])
 hdb = HDBSCAN(min_cluster_size=forward_expansion//3, max_cluster_size=forward_expansion, metric="precomputed", store_centers=None,allow_single_cluster=False).fit(actualSetsDistances.copy())
 
 labels_HDBSCAN = hdb.labels_
