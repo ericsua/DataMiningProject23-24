@@ -231,18 +231,18 @@ print("Creating route binary matrix...")
 route_matrix, route_matrix_standard = create_binary_matrices(actualSets, standardSets)
 print("Route matrix shape: ", route_matrix.shape)
 
-print("Minhashing route and standard matrix...")    
-num_hash_functions = find_num_hashes_minhash(route_matrix)
-route_matrix, route_matrix_standard = minhash_matrices(route_matrix, route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
-print("Route minhashed matrix shape: ", route_matrix.shape)
+# print("Minhashing route and standard matrix...")    
+# num_hash_functions = find_num_hashes_minhash(route_matrix)
+# route_matrix, route_matrix_standard = minhash_matrices(route_matrix, route_matrix_standard, num_hash_functions if num_hash_functions % 2 == 0 else num_hash_functions + 1)
+# print("Route minhashed matrix shape: ", route_matrix.shape)
 
 print("Creating merchandise binary matrix...")
 merch_matrix = np.array([s[2] for s in actualSets])
 
 
 print("Computing Jaccard similarity route matrix...")
-threshold_lsh = find_threshold_lsh(route_matrix, route_matrix)
-actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+#actualSetsDistances = jaccard_distance_minhash_route_merch(route_matrix, merch_matrix, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+actualSetsDistances = jaccard_distance_route_merch(route_matrix, merch_matrix, fusion=FUSION, alpha=ALPHA)
 print("Distance matrix shape: ", actualSetsDistances.shape)
 
 
@@ -251,10 +251,12 @@ print("\n\nTASK 2 ESSENTIALS\n\n")
 
 merch_matrix_standard = np.array([s[2] for s in standardSets])
 
-threshold_lsh_actual_to_standard = find_threshold_lsh(route_matrix, route_matrix_standard)
+
 print("Computing Jaccard similarity actual to standard route matrix...")
-route_similarity_standard_to_actual = similarity_minhash_lsh_two_matrices_and_merch(route_matrix, merch_matrix, route_matrix_standard, merch_matrix_standard, thresh_user=threshold_lsh_actual_to_standard, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+#route_similarity_standard_to_actual = similarity_minhash_two_matrices_and_merch(route_matrix, merch_matrix, route_matrix_standard, merch_matrix_standard, metric=METRIC, fusion=FUSION, alpha=ALPHA)
+route_similarity_standard_to_actual = similarity_two_matrices_and_merch(route_matrix, merch_matrix, route_matrix_standard, merch_matrix_standard, fusion=FUSION, alpha=ALPHA)
 print("Similarity matrix actual-to-standard shape: ", route_similarity_standard_to_actual.shape)
+
 
 ###### CLUSTERING ######
 
@@ -319,7 +321,7 @@ else:
     CAN_BE_ORDERED = False
     # get the closest standard vector for each medoid using simMatrixMixed
     argmax = simMatrixMixed.argmax(axis=1) # get the index of the closest standard vector for each medoid
-    maxValues = simMatrixMixed.max(axis=1).toarray() # get the value of the closest standard vector for each medoid
+    maxValues = simMatrixMixed.max(axis=1) # get the value of the closest standard vector for each medoid
     argmax = np.array(argmax).flatten()
     maxValues = maxValues.flatten()
     print("Closest standard routes for medoids: ", argmax.shape, type(argmax), argmax)
@@ -335,7 +337,7 @@ else:
     actualRefStandardIdsNumpy = np.array(actualRefStandardIds)
     for i, stdID in enumerate(standardRefIds):
         distSimCluster = route_similarity_standard_to_actual[np.where(actualRefStandardIdsNumpy == stdID)[0], i]
-        distStdCluster = 1 - distSimCluster.toarray()
+        distStdCluster = 1 - distSimCluster
         distStdCluster = distStdCluster[distStdCluster != 1]
         if distStdCluster.shape[0] == 0:
             distancesStandardVectors.append(1)
@@ -435,7 +437,7 @@ if PLOT:
     )
 
     if len(medoidSets) > 0:
-        medoidsElements = completeSetTSNE[[map_indices_back[i] for i in medoidsIndices]] 
+        medoidsElements = completeSetTSNE[medoidsIndices]
         traceMedoids = go.Scatter3d(
             x=medoidsElements[:,0],
             y=medoidsElements[:,1],
@@ -570,7 +572,7 @@ with open(os.path.join(HOME, "results", 'recStandard' + SUFFIX_FILE + '.json'), 
     recStandard = []
     for i, index in enumerate(medoidsIndices):
         recRoute = {"id": "s" + str(i)}
-        recRoute["route"] = dfActual.iloc[actualSets[map_indices_back[index]][0]]["route"]
+        recRoute["route"] = dfActual.iloc[actualSets[index][0]]["route"]
         recStandard.append(recRoute)
     json.dump(recStandard, f, ensure_ascii=False, indent=2)
 
@@ -593,7 +595,7 @@ print("\nTASK 1 FINISHED\n")
 ###########################
 
 print("Finding the top 5 standard routes for each driver...")
-max_value = np.max(route_similarity_standard_to_actual, axis=1).toarray()
+max_value = np.max(route_similarity_standard_to_actual, axis=1)
 max_value_index = np.argmax(route_similarity_standard_to_actual, axis=1)
 max_value_index[max_value == 0] = -1
 
@@ -669,10 +671,9 @@ driversDistances = {}
 driversIndicesMapped = {}
 driversIndicesBack = {}
 for driver in uniqueDrivers:
-    driver_indices_mapped =  [ map_indices[i] for i in driver_indices[driver] if i in map_indices ]
-    driver_indices_mapped_back =  [ map_indices_back[i] for i in driver_indices_mapped ]
+    driver_indices_mapped =  driver_indices[driver]
     driversIndicesMapped[driver] = driver_indices_mapped
-    driversIndicesBack[driver] = driver_indices_mapped_back
+    #driversIndicesBack[driver] = driver_indices_mapped_back
 
 best_clustroids = []
 
@@ -685,7 +686,8 @@ driversIdealIndex = {}
 print('Performing DBSCAN for each driver...')
 for driver, driverIndices in tqdm(driversIndicesMapped.items()):
     driverDistance = actualSetsDistances[driverIndices]
-    driverDistance = csr_matrix(driverDistance[:, driverIndices])
+    driverDistance = driverDistance[:, driverIndices]
+    #driverDistance = csr_matrix(driverDistance[:, driverIndices])
     hdb = HDBSCAN(min_cluster_size=2, max_cluster_size=forward_expansion, metric="precomputed", store_centers=None, allow_single_cluster=False ).fit(driverDistance.copy())
 
     labels = hdb.labels_
@@ -709,7 +711,7 @@ for driver, driverIndices in tqdm(driversIndicesMapped.items()):
     selected_point = np.argmin(selected_cluster_distance)
     best_clustroid = mapping_clustroid(labels, selected_cluster, selected_point)
     best_clustroids.append(best_clustroid)
-    best_index = driversIndicesBack[driver][best_clustroid]
+    best_index = driversIndicesMapped[driver][best_clustroid]
     selected_point = selected_cluster_points[selected_point]
 
     driversClustersPoints[driver] = selected_cluster_points
