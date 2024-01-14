@@ -13,7 +13,7 @@ from scipy.sparse import csr_matrix, coo_matrix
 from sklearn.metrics.pairwise import cosine_similarity
 
 
-warnings.simplefilter('ignore', category=NumbaWarning)
+#warnings.simplefilter('ignore', category=NumbaWarning)
 
 def hash_function_hash_code(num_of_hashes,n_col,next_prime):
     coeffA = np.array(random.sample(range(0,n_col*100),num_of_hashes)).reshape((num_of_hashes,1))
@@ -294,6 +294,68 @@ def compute_subset_similarity_matrix_and_merch(matrix, matrixMerch, progress_pro
         progress_proxy.update(1)
     return similarity_pairs
 
+#@njit(cache=True, nogil=True, parallel=True)
+# def compute_subset_similarity_matrix_and_merch(matrix, matrixMerch, progress_proxy, metric="jaccard", alpha=0.8, fusion="mean"):
+#     n = matrix.shape[0]
+#     n1 = matrix.shape[1]
+#     m = matrixMerch.shape[1]
+#     data = []
+#     rows = []
+#     cols = []
+#     subset2 = matrix
+#     subset2Merch = matrixMerch
+#     squareMatrix = np.full((n, m), 2)
+#     routeWeights = np.full(n, alpha)
+#     merchWeights = np.full(n, 1-alpha)
+#     normsSubset2Merch = np.sqrt(np.sum(np.power(subset2Merch, squareMatrix), axis=1))
+#     for i in range(n):
+#         subset1 = matrix[i].reshape(1, -1)
+#         subset1Merch = matrixMerch[i].reshape(1, -1)
+        
+#         min_matrix = np.minimum(subset1, subset2)
+#         sum_min_matrix = np.sum(min_matrix, axis=-1)
+        
+#         max_matrix = np.maximum(subset1, subset2)
+#         sum_max_matrix = np.sum(max_matrix, axis=-1)
+        
+#         if metric == "cosine":
+#             # COSINE
+#             distMerch = 1 - (((subset1Merch * subset2Merch).sum(axis=1) / (np.sqrt(np.sum(np.power(subset1Merch, squareMatrix),axis=1)) * normsSubset2Merch)) + 1) / 2
+#         elif metric == "jaccard":
+#             # JACCARD
+#             min_matrix_merch = np.minimum(subset1Merch, subset2Merch)
+#             sum_min_matrix_merch = np.sum(min_matrix_merch, axis=-1)
+#             max_matrixMerch = np.maximum(subset1Merch, subset2Merch)
+#             sum_max_matrixMerch = np.sum(max_matrixMerch, axis=-1)
+#             distMerch = 1 - (sum_min_matrix_merch / sum_max_matrixMerch)
+#         else:
+#             # L2
+#             distMerch = np.sqrt(np.sum(np.power(subset1Merch - subset2Merch, squareMatrix), axis=1))
+        
+#         routeDistance = 1 - (sum_min_matrix / sum_max_matrix)
+        
+#         if fusion == "mean":
+#             # MEAN
+#             similarity = (alpha) * routeDistance + (1-alpha) * distMerch
+#         elif fusion == "product":
+#             # PRODUCT
+#             similarity = routeDistance * distMerch
+#         else:
+#             # WEIGHTED PRODUCT
+#             similarity = np.power(routeDistance, routeWeights) * np.power(distMerch, merchWeights)
+        
+#         for j in range(n):
+#             if similarity[j] != 0:
+#                 data.append(similarity[j])
+#                 rows.append(i)
+#                 cols.append(j)
+        
+#         progress_proxy.update(1)
+    
+#     print("Creating sparse similarity matrix...")
+#     coo = coo_matrix((data, (rows, cols)), shape=(n, n)).tocsr()
+#     return coo
+
 
 def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=0.2, metric="jaccard", alpha=0.8, fusion="mean"):
     pairs = lsh(matrix, thresh_user=thresh_user)
@@ -312,6 +374,7 @@ def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=
     subset_matrixMerch = matrixMerch[sortedUniqueRowsSet]
     with ProgressBar(total=len(sortedUniqueRowsSet)) as progress:
         subset_sim_matrix = compute_subset_similarity_matrix_and_merch(subset_matrix, subset_matrixMerch, progress, metric=metric, alpha=alpha, fusion=fusion)
+        #data, rows, cols = compute_subset_similarity_matrix_and_merch(subset_matrix, subset_matrixMerch, progress, metric=metric, alpha=alpha, fusion=fusion)
     
     print("Creating mapping...")
     
@@ -327,9 +390,9 @@ def jaccard_similarity_minhash_lsh_route_merch(matrix, matrixMerch, thresh_user=
         
     map_indices_back = {v: k for k, v in map_indices.items()}
     
-    print("Creating sparse similarity matrix...")
-    subset_sim_matrix = csr_matrix(subset_sim_matrix, dtype=np.float32)
-    
+    # print("Creating sparse similarity matrix...")
+    #subset_sim_matrix = csr_matrix(subset_sim_matrix)
+    #subset_sim_matrix = coo_matrix((data, (rows, cols)), shape=(len(sortedUniqueRowsSet), len(sortedUniqueRowsSet))).tocsr()
     return subset_sim_matrix, map_indices, map_indices_back
 
 def similarity_two_matrices_and_merch(matrix1,matrix1Merch, matrix2, matrix2Merch, alpha=0.8, fusion="mean"):
@@ -507,19 +570,35 @@ def create_binary_matrices(routeSet1, routeSet2):
             binaryMatrix2[i][uniqueShinglesBoth.index(shingle)] = 1
     return binaryMatrix1, binaryMatrix2
 
+def find_closest_number_with_factors(n):
+    n = n+15
+    factors_n = [i for i in range(1, n + 1) if n % i == 0]
+
+    closest_number = n
+    max_factors_count = len(factors_n)
+
+    for i in range(n - 1, n-30, -1):
+        factors_i = [j for j in range(1, i + 1) if i % j == 0]
+
+        if len(factors_i) > max_factors_count:
+            closest_number = i
+            max_factors_count = len(factors_i)
+
+    return closest_number
+
 def find_num_hashes_minhash(matrix):
-    if matrix.shape[1] < 150:
-        num_hash_functions = matrix.shape[1]
+    if matrix.shape[1] < 125:
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1])
     elif matrix.shape[1] < 500:
-        num_hash_functions = matrix.shape[1]//2
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1]//2)
     elif matrix.shape[1] < 1000:
-        num_hash_functions = matrix.shape[1]//10
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1]//4)
     elif matrix.shape[1] < 10_000:
-        num_hash_functions = 150
-    elif matrix.shape[1] < 100_000:
-        num_hash_functions = 250
-    else:
         num_hash_functions = 300
+    elif matrix.shape[1] < 100_000:
+        num_hash_functions = 420
+    else:
+        num_hash_functions = 510
     return num_hash_functions
 
 def find_threshold_lsh(matrix1, matrix2):
@@ -527,11 +606,11 @@ def find_threshold_lsh(matrix1, matrix2):
     if tot < 100_000_000:
         threshold = 0.0
     elif tot < 1_000_000_000:
-        threshold = 0.2
-    elif tot < 10_000_000_000:
         threshold = 0.4
-    else:
+    elif tot < 10_000_000_000:
         threshold = 0.7
+    else:
+        threshold = 0.9
     return threshold
 
 

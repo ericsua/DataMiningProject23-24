@@ -242,6 +242,7 @@ merch_matrix = np.array([s[2] for s in actualSets])
 
 print("Computing Jaccard similarity route matrix...")
 threshold_lsh = find_threshold_lsh(route_matrix, route_matrix)
+print("LSH threshold estimated:", threshold_lsh)
 actualSetsDistances, map_indices, map_indices_back = jaccard_similarity_minhash_lsh_route_merch(route_matrix, merch_matrix, thresh_user=threshold_lsh, metric=METRIC, fusion=FUSION, alpha=ALPHA)
 print("Distance matrix shape: ", actualSetsDistances.shape)
 
