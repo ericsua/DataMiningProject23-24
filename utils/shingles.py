@@ -1,4 +1,5 @@
 import numpy as np
+from tqdm import tqdm
 
 def hashShingles(shingles):
     # hash shingles
@@ -11,7 +12,8 @@ def hashShingles(shingles):
 def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity):
     # create shingles for each route
     shingles = []
-    for index, s in df.iterrows():
+    for index, s in tqdm(df.iterrows(), total=df.shape[0]):
+    # for index, s in df.iterrows():
         idS = s['id']
         route = s['route']
         shingle = [index]

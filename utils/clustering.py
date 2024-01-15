@@ -500,11 +500,11 @@ def create_binary_matrices(routeSet1, routeSet2):
     uniqueShinglesBoth = list(set([shingle for route in routeSet1 for shingle in route[1]] + [shingle for route in routeSet2 for shingle in route[1]]))
     binaryMatrix1 = np.zeros((len(routeSet1), len(uniqueShinglesBoth)))
     binaryMatrix2 = np.zeros((len(routeSet2), len(uniqueShinglesBoth)))
-    for i, route in enumerate(routeSet1):
+    for i, route in enumerate(tqdm(routeSet1)):
         for shingle in route[1]:
             binaryMatrix1[i][uniqueShinglesBoth.index(shingle)] = 1
             
-    for i, route in enumerate(routeSet2):
+    for i, route in enumerate(tqdm(routeSet2)):
         for shingle in route[1]:
             binaryMatrix2[i][uniqueShinglesBoth.index(shingle)] = 1
     return binaryMatrix1, binaryMatrix2

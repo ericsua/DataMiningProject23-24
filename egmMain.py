@@ -204,7 +204,7 @@ print(f"\n\033[92mK-Shingles used: {K_SHINGLES} \033[0m")
 
 ##### CREATE SHINGLES #####
 
-print("\nCreating shingles in parallel...")
+print("\nCreating shingles...")
 #pandarallel.initialize(progress_bar=True)
 standardSets = createShingles(dfStandard, K_SHINGLES, uniqueCities, uniqueItems, longestRoute, maxItemQuantity)
 #standardSets = standardSets.tolist()
@@ -651,15 +651,15 @@ for driver in uniqueDrivers:
     mean_score_driver = np.mean(score_for_all_columns)
     
     # Calculate the mean for each top 5 routes
-    mean_score_over_top1 = mean_score_driver / best_route_Ids[0][1]
+    mean_score_over_top1 = mean_score_driver / best_route_Ids[0][1] if best_route_Ids[0][1] != 0 else 0
     mean_top1.append(mean_score_over_top1)
-    mean_score_over_top2 = mean_score_driver / best_route_Ids[1][1]
+    mean_score_over_top2 = mean_score_driver / best_route_Ids[1][1] if best_route_Ids[1][1] != 0 else 0
     mean_top2.append(mean_score_over_top2)
-    mean_score_over_top3 = mean_score_driver / best_route_Ids[2][1]
+    mean_score_over_top3 = mean_score_driver / best_route_Ids[2][1] if best_route_Ids[2][1] != 0 else 0
     mean_top3.append(mean_score_over_top3)
-    mean_score_over_top4 = mean_score_driver / best_route_Ids[3][1]
+    mean_score_over_top4 = mean_score_driver / best_route_Ids[3][1] if best_route_Ids[3][1] != 0 else 0
     mean_top4.append(mean_score_over_top4)
-    mean_score_over_top5 = mean_score_driver / best_route_Ids[4][1]
+    mean_score_over_top5 = mean_score_driver / best_route_Ids[4][1] if best_route_Ids[4][1] != 0 else 0
     mean_top5.append(mean_score_over_top5)
 
 
@@ -678,29 +678,29 @@ print("\nTASK 2 RESULTS:")
 print("\033[93m\nMean Drivers TOP5 Improvements:\033[0m")
 
 if (1-np.mean(mean_top1)) < 0:
-    print("   Mean Divergence Top1 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top1)) * 100))
+    print("   Mean Top1 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top1)) * 100))
 else:
-    print("   Mean Divergence Top1 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top1)) * 100))
+    print("   Mean Top1 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top1)) * 100))
 
 if (1-np.mean(mean_top2)) < 0:
-    print("   Mean Divergence Top2 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top2)) * 100))
+    print("   Mean Top2 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top2)) * 100))
 else:
-    print("   Mean Divergence Top2 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top2)) * 100))
+    print("   Mean Top2 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top2)) * 100))
 
 if (1-np.mean(mean_top3)) < 0:
-    print("   Mean Divergence Top3 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top3)) * 100))
+    print("   Mean Top3 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top3)) * 100))
 else:
-    print("   Mean Divergence Top3 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top3)) * 100))
+    print("   Mean Top3 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top3)) * 100))
 
 if (1-np.mean(mean_top4)) < 0:
-    print("   Mean Divergence Top4 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top4)) * 100))
+    print("   Mean Top4 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top4)) * 100))
 else:
-    print("   Mean Divergence Top4 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top4)) * 100))
+    print("   Mean Top4 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top4)) * 100))
 
 if (1-np.mean(mean_top5)) < 0:
-    print("   Mean Divergence Top5 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top5)) * 100))
+    print("   Mean Top5 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top5)) * 100))
 else:
-    print("   Mean Divergence Top5 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top5)) * 100))
+    print("   Mean Top5 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top5)) * 100))
 
 
 print("\nTASK 2 FINISHED\n")
