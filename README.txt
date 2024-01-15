@@ -33,7 +33,10 @@ The program can be run with the following command:
             -f: fusion method to use between route and merchandise similarity
             --alpha: weight (between 0 and 1) of the route similarity  wrt the merchandise similarity
 
-    - Help:
-        python3 egmMain.py -h
+        - Help:
+            python3 egmMain.py -h
+        
+    - Fast but maximum dataset size 10_000:
+        python3 egmMainFast.py (... same parameters as above)
 
 NB: the standard route file must start with "standard" and the actual route file must start with "actual".

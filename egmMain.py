@@ -1,10 +1,8 @@
 import os
 import sys
 
-import math
 import json
 import pandas as pd
-import lxml
 import numpy as np
 import time
 
@@ -16,8 +14,6 @@ import umap
 import plotly.graph_objects as go
 
 from scipy.sparse import csr_matrix
-
-from pandarallel import pandarallel
 
 from tqdm import tqdm
 
@@ -187,10 +183,6 @@ if shortestRoute < 2 or len(dictShingles) * len(dfActual) > 100_000_000:
     print("\n\033[91mK-Shingles too big, setting to 2\033[0m")
     K_SHINGLES = 2
 
-# print("\nUnique cities: ", uniqueCities)
-# print("Unique items: ", uniqueItems)
-# print("Unique drivers: ", uniqueDrivers)
-
 standardIds = dfStandard['id'].tolist()
 
 print("\nNumber of cities: ", len(uniqueCities))
@@ -353,6 +345,7 @@ else:
     cv_standard_vectors = std_dev_distance_standard_vectors / mean_distance_standard_vectors
     
     # print in green if the improvement is positive, in red if it is negative
+    print("TASK 1 RESULTS:")
     print("\n\033[94mMean distance from vectors of the same cluster to:")
     print("         clustroids: ", mean_distance_clustroids)
     print("   standard vectors: ", mean_distance_standard_vectors)
@@ -734,6 +727,7 @@ medoid_mean_distance /= len(uniqueDrivers)
 medoid_best_distance /= len(uniqueDrivers)
 divergence /= len(uniqueDrivers)
 
+print("TASK 3 RESULTS:")
 print("\033[93m\nDriver's Divergence:\033[0m")
 print(f"Mean Intra-Cluster Distance: {medoid_mean_distance}")
 print(f"Best Intra-Cluster Distance: {medoid_best_distance}")
