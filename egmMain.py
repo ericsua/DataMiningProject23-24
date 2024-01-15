@@ -625,7 +625,11 @@ for driver in uniqueDrivers:
 
     # Calculate the mean for each unique value
     weighted_sums = [ np.mean(driver_max_value[driver_standard_index == idx]) * np.count_nonzero(driver_standard_index == idx) for idx in range(len(standardIds)) if idx != -1]
+    weighted_sums = np.nan_to_num(weighted_sums)
+    # print("weighted sums",weighted_sums)   
     count_value = [np.count_nonzero(driver_standard_index == idx) for idx in range(len(standardIds)) if idx!=-1]
+    # print("count value",count_value)
+    
     best_route_Ids = []
     # Print the results for each driver
     for idx, mean in zip(standardIds, weighted_sums):
@@ -633,9 +637,10 @@ for driver in uniqueDrivers:
 
     # Sort the routes by their mean
     best_route_Ids.sort(key=lambda x: x[1], reverse=True)
-    
+
     # Keep the top 5 routes
     top_5_routes = best_route_Ids[:5]
+    # print("top 5 routes",top_5_routes)
 
     # Update the driver's routes in the dictionary
     drivers_routes[driver] = {'driver': driver, 'routes': [id for id,value in top_5_routes]}
@@ -670,32 +675,32 @@ with open(os.path.join(HOME, 'results', 'driver' + SUFFIX_FILE + '.json'), 'w', 
 print("JSON driver data has been written to results/driver.json")
 
 print("\nTASK 2 RESULTS:")
-print("\033[93m\nMean Drivers TOP5 Divergence:\033[0m")
+print("\033[93m\nMean Drivers TOP5 Improvements:\033[0m")
 
 if (1-np.mean(mean_top1)) < 0:
-    print("   Mean Divergence Top1 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top1)) * 100))
+    print("   Mean Divergence Top1 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top1)) * 100))
 else:
-    print("   Mean Divergence Top1 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top1)) * 100))
+    print("   Mean Divergence Top1 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top1)) * 100))
 
 if (1-np.mean(mean_top2)) < 0:
-    print("   Mean Divergence Top2 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top2)) * 100))
+    print("   Mean Divergence Top2 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top2)) * 100))
 else:
-    print("   Mean Divergence Top2 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top2)) * 100))
+    print("   Mean Divergence Top2 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top2)) * 100))
 
 if (1-np.mean(mean_top3)) < 0:
-    print("   Mean Divergence Top3 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top3)) * 100))
+    print("   Mean Divergence Top3 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top3)) * 100))
 else:
-    print("   Mean Divergence Top3 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top3)) * 100))
+    print("   Mean Divergence Top3 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top3)) * 100))
 
 if (1-np.mean(mean_top4)) < 0:
-    print("   Mean Divergence Top4 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top4)) * 100))
+    print("   Mean Divergence Top4 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top4)) * 100))
 else:
-    print("   Mean Divergence Top4 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top4)) * 100))
+    print("   Mean Divergence Top4 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top4)) * 100))
 
 if (1-np.mean(mean_top5)) < 0:
-    print("   Mean Divergence Top5 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top5)) * 100))
+    print("   Mean Divergence Top5 Decline: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top5)) * 100))
 else:
-    print("   Mean Divergence Top5 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top5)) * 100))
+    print("   Mean Divergence Top5 Improvement: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top5)) * 100))
 
 
 print("\nTASK 2 FINISHED\n")
