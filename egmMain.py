@@ -567,7 +567,7 @@ with open(os.path.join(HOME, "results", 'recStandard' + SUFFIX_FILE + '.json'), 
         recStandard.append(recRoute)
     json.dump(recStandard, f, ensure_ascii=False, indent=2)
 
-print("\n\nRecommended standard routes saved to file 'results/recStandard.json'")
+print("\n\nRecommended standard routes saved to file 'results/recStandard" + SUFFIX_FILE + ".json'")
     
     
 print("\nTASK 1 FINISHED\n")
@@ -668,7 +668,7 @@ for driver in uniqueDrivers:
 result_list = list(drivers_routes.values())
 
 # Write the result to driver.json
-print("\nWriting JSON driver data to results/driver.json...")
+print("\nWriting JSON driver data to results/driver" + SUFFIX_FILE + ".json...")
 with open(os.path.join(HOME, 'results', 'driver' + SUFFIX_FILE + '.json'), 'w', encoding="utf-8") as outfile:
     json.dump(result_list, outfile, ensure_ascii=False ,indent=2)
 
@@ -801,12 +801,12 @@ for driver in uniqueDrivers:
     data.append({'driver':driver, 'route':dfActual.loc[driversIdealIndex[driver]]['route']})
 
 # Write the data to the JSON file
-print("\nWriting JSON data to results/perfectRoute.json...")
+print("\nWriting JSON data to results/perfectRoute" + SUFFIX_FILE + ".json...")
 file_path = os.path.join(HOME, 'results', "perfectRoute" + SUFFIX_FILE + '.json') #"standard.json"
 with open(file_path, 'w', encoding="utf-8") as json_file:
     json.dump(data, json_file, indent=2, ensure_ascii=False)
     
-print("JSON data has been written to results/perfectRoute.json")
+print("JSON data has been written to results/perfectRoute" + SUFFIX_FILE + ".json")
 
 print("\nTASK 3 FINISHED\n")
 
