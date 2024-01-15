@@ -592,39 +592,44 @@ max_value_index[max_value == 0] = -1
 
 # uniqueDrivers
 driver_indices = {}
+driver_std_id = {}
 
 for i, s in dfActual.iterrows():
     driver = s['driver']
+    standard_ruote_id = s['sroute']
     
     # Check if the driver is already in the dictionary
     if driver in driver_indices:
         # If yes, append the index to the existing array
         driver_indices[driver].append(i)
+        driver_std_id[driver].append(standard_ruote_id)
     else:
         # If not, create a new array with the current index
         driver_indices[driver] = [i]
+        driver_std_id[driver] = [standard_ruote_id]
 
 
 
 # Create a dictionary of all drivers' routes
 drivers_routes = {}
+mean_top1 = []
+mean_top2 = []
+mean_top3 = []
+mean_top4 = []
+mean_top5 = []
 
 for driver in uniqueDrivers:
 
     driver_standard_index = np.array(max_value_index[driver_indices[driver]])
     driver_max_value = np.array(max_value[driver_indices[driver]])
 
-    # Assuming driver_standard_index is a NumPy array
-    unique_values_index = np.unique(driver_standard_index[~np.isnan(driver_standard_index)]).astype(int)
-    # print("unique_values_index", unique_values_index)
-
     # Calculate the mean for each unique value
-    weighted_sums = [ np.mean(driver_max_value[driver_standard_index == idx]) * np.count_nonzero(driver_standard_index == idx) for idx in unique_values_index if not np.isnan(idx)]
-
+    weighted_sums = [ np.mean(driver_max_value[driver_standard_index == idx]) * np.count_nonzero(driver_standard_index == idx) for idx in range(len(standardIds)) if idx != -1]
+    count_value = [np.count_nonzero(driver_standard_index == idx) for idx in range(len(standardIds)) if idx!=-1]
     best_route_Ids = []
     # Print the results for each driver
-    for idx, mean in zip(unique_values_index, weighted_sums):
-        best_route_Ids.append([standardIds[idx], mean])
+    for idx, mean in zip(standardIds, weighted_sums):
+        best_route_Ids.append([idx, mean])
 
     # Sort the routes by their mean
     best_route_Ids.sort(key=lambda x: x[1], reverse=True)
@@ -634,6 +639,25 @@ for driver in uniqueDrivers:
 
     # Update the driver's routes in the dictionary
     drivers_routes[driver] = {'driver': driver, 'routes': [id for id,value in top_5_routes]}
+    
+    mean_for_all_columns =  np.mean(route_similarity_standard_to_actual[driver_indices[driver]], axis=0)
+    # Multiply the mean of all columns by the counts
+    score_for_all_columns = np.multiply(mean_for_all_columns, count_value)
+    mean_score_driver = np.mean(score_for_all_columns)
+    
+    # Calculate the mean for each top 5 routes
+    mean_score_over_top1 = mean_score_driver / best_route_Ids[0][1]
+    mean_top1.append(mean_score_over_top1)
+    mean_score_over_top2 = mean_score_driver / best_route_Ids[1][1]
+    mean_top2.append(mean_score_over_top2)
+    mean_score_over_top3 = mean_score_driver / best_route_Ids[2][1]
+    mean_top3.append(mean_score_over_top3)
+    mean_score_over_top4 = mean_score_driver / best_route_Ids[3][1]
+    mean_top4.append(mean_score_over_top4)
+    mean_score_over_top5 = mean_score_driver / best_route_Ids[4][1]
+    mean_top5.append(mean_score_over_top5)
+
+
 
 # Convert the dictionary to a list for JSON serialization
 result_list = list(drivers_routes.values())
@@ -644,6 +668,35 @@ with open(os.path.join(HOME, 'results', 'driver' + SUFFIX_FILE + '.json'), 'w', 
     json.dump(result_list, outfile, ensure_ascii=False ,indent=2)
 
 print("JSON driver data has been written to results/driver.json")
+
+print("\nTASK 2 RESULTS:")
+print("\033[93m\nMean Drivers TOP5 Divergence:\033[0m")
+
+if (1-np.mean(mean_top1)) < 0:
+    print("   Mean Divergence Top1 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top1)) * 100))
+else:
+    print("   Mean Divergence Top1 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top1)) * 100))
+
+if (1-np.mean(mean_top2)) < 0:
+    print("   Mean Divergence Top2 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top2)) * 100))
+else:
+    print("   Mean Divergence Top2 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top2)) * 100))
+
+if (1-np.mean(mean_top3)) < 0:
+    print("   Mean Divergence Top3 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top3)) * 100))
+else:
+    print("   Mean Divergence Top3 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top3)) * 100))
+
+if (1-np.mean(mean_top4)) < 0:
+    print("   Mean Divergence Top4 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top4)) * 100))
+else:
+    print("   Mean Divergence Top4 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top4)) * 100))
+
+if (1-np.mean(mean_top5)) < 0:
+    print("   Mean Divergence Top5 Improvement: \033[91m{:.2f}% \033[0m".format(-(1-np.mean(mean_top5)) * 100))
+else:
+    print("   Mean Divergence Top5 Decline: \033[92m{:.2f}% \033[0m".format((1-np.mean(mean_top5)) * 100))
+
 
 print("\nTASK 2 FINISHED\n")
 
