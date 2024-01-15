@@ -62,6 +62,8 @@ def find_band_and_row_values(columns, threshold):
                 if np.abs((1 / previous_b) ** (1 / previous_r) - threshold) < np.abs((1 / b) ** (1 / r) - threshold):
                     return previous_b, previous_r
                 return b, r
+            previous_b = b
+            previous_r = r
     return columns, 1
 
 def lsh(minhash_matrix, thresh_user=0.2):
@@ -524,8 +526,10 @@ def find_num_hashes_minhash(matrix):
 
 def find_threshold_lsh(matrix1, matrix2):
     tot = matrix1.shape[0]*matrix2.shape[0]
-    if tot < 100_000_000:
+    if tot <= 100_000_000:
         threshold = 0.0
+    elif tot < 500_000_000:
+        threshold = 0.1
     elif tot < 1_000_000_000:
         threshold = 0.2
     elif tot < 10_000_000_000:
