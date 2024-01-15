@@ -213,11 +213,11 @@ print(f"\n\033[92mK-Shingles used: {K_SHINGLES} \033[0m")
 ##### CREATE SHINGLES #####
 
 print("\nCreating shingles in parallel...")
-pandarallel.initialize(progress_bar=True)
-standardSets = dfStandard.parallel_apply(lambda s: create_shingles_selfcontained(s, K_SHINGLES, uniqueCities, uniqueItems, longestRoute, maxItemQuantity), axis=1)
-standardSets = standardSets.tolist()
-actualSets = dfActual.parallel_apply(lambda s: create_shingles_selfcontained(s, K_SHINGLES, uniqueCities, uniqueItems, longestRoute, maxItemQuantity), axis=1)
-actualSets = actualSets.tolist()
+#pandarallel.initialize(progress_bar=True)
+standardSets = createShingles(dfStandard, K_SHINGLES, uniqueCities, uniqueItems, longestRoute, maxItemQuantity)
+#standardSets = standardSets.tolist()
+actualSets = createShingles(dfActual, K_SHINGLES, uniqueCities, uniqueItems, longestRoute, maxItemQuantity)
+#actualSets = actualSets.tolist()
 
 assert len(standardSets[0]) == 3, "The length of the standard set is not equal to 3 (index, shingles, merchandise)"
 assert len(standardSets[0][2]) == len(uniqueItems), "The length of the merchandise vector is not equal to the number of unique items"
@@ -250,7 +250,7 @@ print("Distance matrix shape: ", actualSetsDistances.shape)
 print("\n\nTASK 2 ESSENTIALS\n\n")
 
 merch_matrix_standard = np.array([s[2] for s in standardSets])
-
+ 
 threshold_lsh_actual_to_standard = find_threshold_lsh(route_matrix, route_matrix_standard)
 print("Computing Jaccard similarity actual to standard route matrix...")
 route_similarity_standard_to_actual = similarity_minhash_lsh_two_matrices_and_merch(route_matrix, merch_matrix, route_matrix_standard, merch_matrix_standard, thresh_user=threshold_lsh_actual_to_standard, metric=METRIC, fusion=FUSION, alpha=ALPHA)
@@ -682,6 +682,9 @@ driversClusterLabels = {}
 driversIdealPoint = {}
 driversIdealIndex = {}
 
+driver_best_divergence = {}
+driver_cluster_divergences = {}
+
 print('Performing DBSCAN for each driver...')
 for driver, driverIndices in tqdm(driversIndicesMapped.items()):
     driverDistance = actualSetsDistances[driverIndices]
@@ -705,6 +708,8 @@ for driver, driverIndices in tqdm(driversIndicesMapped.items()):
     # Access the data points in the selected cluster
     selected_cluster_points = driverDistance[labels == selected_cluster]
     selected_cluster_distance = intra_cluster_distance(selected_cluster_points)
+    driver_best_divergence[driver] = np.min(selected_cluster_distance)
+    driver_cluster_divergences[driver] = np.mean(selected_cluster_distance)
     # Find the medoid that maximize the inter-cluster similarity
     selected_point = np.argmin(selected_cluster_distance)
     best_clustroid = mapping_clustroid(labels, selected_cluster, selected_point)
@@ -717,6 +722,27 @@ for driver, driverIndices in tqdm(driversIndicesMapped.items()):
     driversClusterLabels[driver] = selected_cluster
     driversIdealPoint[driver] = selected_point
     driversIdealIndex[driver] = best_index
+
+medoid_mean_distance = 0
+medoid_best_distance = 0
+divergence = 0
+for driver in uniqueDrivers:
+    medoid_mean_distance += driver_cluster_divergences[driver]
+    medoid_best_distance += driver_best_divergence[driver]
+    divergence += medoid_best_distance / medoid_mean_distance
+medoid_mean_distance /= len(uniqueDrivers)
+medoid_best_distance /= len(uniqueDrivers)
+divergence /= len(uniqueDrivers)
+
+print("\033[93m\nDriver's Divergence:\033[0m")
+print(f"Mean Intra-Cluster Distance: {medoid_mean_distance}")
+print(f"Best Intra-Cluster Distance: {medoid_best_distance}")
+if divergence < 1:
+    # print in green if the improvement is positive, in red if it is negative
+    print("   Mean Divergence Improvement: \033[92m{:.2f}% \033[0m".format(-(1-divergence) * 100))
+else:
+    print("   Mean Divergence Decline: \033[91m{:.2f}% \033[0m\n".format((1-divergence) * 100))
+
 
 data = []
 for driver in uniqueDrivers:
@@ -735,29 +761,40 @@ print("\nTASK 3 FINISHED\n")
 print("\n\nTotal time: {:.2f} seconds".format(time.time() - time_start))
     
 if PLOT:
-    columns = 2
-    #rows = len(uniqueDrivers) // columns
-    rows = NUM_PLOTS // columns
-    fig, axs = plt.subplots(rows, columns, figsize = (columns*3, rows*3))
+    
+    import warnings
 
+    # Disable warnings from the umap-learn library
+    warnings.filterwarnings("ignore", category=UserWarning, module="umap")
+
+    columns = 2
+    rows = NUM_PLOTS // columns
+
+    ## 2D Representation
+    fig, axs = plt.subplots(rows, columns, figsize = (columns*3, rows*3))
     axs = axs.flatten()
 
     for i, driver in enumerate(uniqueDrivers):
         if i == NUM_PLOTS:
             break
         idx = best_clustroids[i]
+        hdbscan_labels = driversLabels[driver]
+        clustered = (hdbscan_labels >= 0)
 
-        fit = umap.UMAP(n_neighbors=15,min_dist=0.1,n_components=2,metric='cosine')
+        fit = umap.UMAP(n_neighbors=5,min_dist=0.9,n_components=2,metric='precomputed')
         driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
         driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
-        u = fit.fit_transform(driverDistance)
+        u = fit.fit(driverDistance)
 
-        axs[i].scatter(u[:,0], u[:,1], s = 50, c=driversLabels[driver])
+        axs[i].scatter(u.embedding_[clustered, 0], u.embedding_[clustered, 1], s = 10, c=hdbscan_labels[clustered], cmap='Spectral')
 
-        axs[i].plot(u[idx, 0], u[idx, 1], marker='*', markersize=5, color='black')
+        # Noise
+        axs[i].scatter(u.embedding_[~clustered, 0], u.embedding_[~clustered, 1], s = 10, color=(0.5,0.5,0.5), alpha=0.5)
 
-        axs[i].axhline(y=u[idx, 1], color='gray', linestyle='--')
-        axs[i].axvline(x=u[idx, 0], color='gray', linestyle='--')
+        axs[i].plot(u.embedding_[idx, 0], u.embedding_[idx, 1], marker='+', markersize=10, color='black')
+
+        axs[i].axhline(y=u.embedding_[idx, 1], color='gray', linestyle='--')
+        axs[i].axvline(x=u.embedding_[idx, 0], color='gray', linestyle='--')
 
         axs[i].set_title(f"driver {driver}", fontsize=12)
         #axs[i].legend()
@@ -766,26 +803,33 @@ if PLOT:
     plt.show()
 
 
-
-    columns = 2
-    #rows = len(uniqueDrivers) // columns
-    rows = NUM_PLOTS // columns
+    ## 3D Representation
     fig = plt.figure(figsize=(columns * 3, rows * 3))
 
     for i, driver in enumerate(uniqueDrivers):
         if i == NUM_PLOTS:
             break
         idx = best_clustroids[i]
+        hdbscan_labels = driversLabels[driver]
+        clustered = (hdbscan_labels >= 0)
 
-        fit = umap.UMAP(n_neighbors=15, min_dist=0.1, n_components=3, metric='euclidean')
+        fit = umap.UMAP(n_neighbors=5, min_dist=0.9, n_components=3, metric='precomputed')
         driverDistance = actualSetsDistances[driversIndicesMapped[driver]]
         driverDistance = csr_matrix(driverDistance[:, driversIndicesMapped[driver]])
-        u = fit.fit_transform(driverDistance)
+        u = fit.fit(driverDistance)
+
+        x = u.embedding_[clustered, 0]
+        y = u.embedding_[clustered, 1]
+        z = u.embedding_[clustered, 2]
 
         ax = fig.add_subplot(rows, columns, i + 1, projection='3d')
-        ax.scatter(u[:, 0], u[:, 1], u[:, 2], s=50, c=driversLabels[driver])
+        ax.scatter(x, y, z, s=10, c=hdbscan_labels[clustered], cmap='Spectral')
 
-        ax.plot(u[idx, 0], u[idx, 1], u[idx, 2], marker='*', markersize=12, color='black')
+        x_best = u.embedding_[idx, 0]
+        y_best = u.embedding_[idx, 1]
+        z_best = u.embedding_[idx, 2]
+
+        ax.plot(x_best, y_best, z_best, marker='+', markersize=20, c='black')
 
         ax.set_title(f"driver {driver}", fontsize=12)
 

@@ -1,6 +1,6 @@
 import numpy as np
 
-def hashShingles(shingles, n):
+def hashShingles(shingles):
     # hash shingles
     string = "" 
     for shingle in shingles:
@@ -8,7 +8,7 @@ def hashShingles(shingles, n):
     
     return hash(string) #% n
 
-def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity, permutations):
+def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity):
     # create shingles for each route
     shingles = []
     for index, s in df.iterrows():
@@ -28,7 +28,7 @@ def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
         
         hashedShingles = []
         for i in range(len(citiesInRoute)-k+1):
-            hashedShingles.append(hashShingles(citiesInRoute[i:i+k], permutations) )
+            hashedShingles.append(hashShingles(citiesInRoute[i:i+k]) )
         
         shingle.append(np.array(hashedShingles))
         
@@ -38,10 +38,10 @@ def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
         
     return shingles # [ index, [shingles], [merchandise] ]
 
-def create_shingles(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity, permutations):
+def create_shingles(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuantity):
     idS = s['id']
     route = s['route']
-    shingle = [s.name]
+    shingle = [s.index]
     citiesInRoute = [] 
     merchandiseInRoute = np.zeros(len(uniqueItems))
     for trip in route:
@@ -55,7 +55,7 @@ def create_shingles(s, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
     
     hashedShingles = []
     for i in range(len(citiesInRoute)-k+1):
-        hashedShingles.append(hashShingles(citiesInRoute[i:i+k], permutations))
+        hashedShingles.append(hash_shingles(citiesInRoute[i:i+k]))
     
     shingle.append(np.array(hashedShingles))
     shingle.append(merchandiseInRoute)
