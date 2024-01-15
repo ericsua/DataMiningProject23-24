@@ -509,19 +509,35 @@ def create_binary_matrices(routeSet1, routeSet2):
             binaryMatrix2[i][uniqueShinglesBoth.index(shingle)] = 1
     return binaryMatrix1, binaryMatrix2
 
+def find_closest_number_with_factors(n):
+    n = n+15
+    factors_n = [i for i in range(1, n + 1) if n % i == 0]
+
+    closest_number = n
+    max_factors_count = len(factors_n)
+
+    for i in range(n - 1, n-30, -1):
+        factors_i = [j for j in range(1, i + 1) if i % j == 0]
+
+        if len(factors_i) > max_factors_count:
+            closest_number = i
+            max_factors_count = len(factors_i)
+
+    return closest_number
+
 def find_num_hashes_minhash(matrix):
-    if matrix.shape[1] < 150:
-        num_hash_functions = matrix.shape[1]
+    if matrix.shape[1] < 125:
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1])
     elif matrix.shape[1] < 500:
-        num_hash_functions = matrix.shape[1]//2
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1]//2)
     elif matrix.shape[1] < 1000:
-        num_hash_functions = matrix.shape[1]//10
+        num_hash_functions = find_closest_number_with_factors(matrix.shape[1]//4)
     elif matrix.shape[1] < 10_000:
-        num_hash_functions = 150
-    elif matrix.shape[1] < 100_000:
-        num_hash_functions = 250
-    else:
         num_hash_functions = 300
+    elif matrix.shape[1] < 100_000:
+        num_hash_functions = 420
+    else:
+        num_hash_functions = 510
     return num_hash_functions
 
 def find_threshold_lsh(matrix1, matrix2):
@@ -535,7 +551,7 @@ def find_threshold_lsh(matrix1, matrix2):
     elif tot < 10_000_000_000:
         threshold = 0.4
     else:
-        threshold = 0.7
+        threshold = 0.9
     return threshold
 
 
