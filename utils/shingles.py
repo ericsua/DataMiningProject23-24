@@ -26,7 +26,7 @@ def createShingles(df, k, uniqueCities, uniqueItems, longestRoute, maxItemQuanti
         if len(route) > 0:
             citiesInRoute.append(uniqueCities.index(route[-1]['to']))
         if len(route) > 0:
-            merchandiseInRoute = merchandiseInRoute / (maxItemQuantity*len(route))
+            merchandiseInRoute = merchandiseInRoute / (maxItemQuantity*longestRoute)
         
         hashedShingles = []
         for i in range(len(citiesInRoute)-k+1):
